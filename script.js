@@ -110,19 +110,12 @@ window.onpopstate = function(event) {
     hideSection();
 };
 
-
 function hideSection() {
     const overlay = document.getElementById('overlay');
-    overlay.style.display = 'none'; // Box ko wapas chupane ke liye
-    overlay.classList.remove('active');
-    document.body.style.overflow = 'auto'; // Scroll chalu karne ke liye
+    overlay.style.display = 'none';
+    document.body.style.overflow = 'auto'; // Page scroll wapas chalu karne ke liye
 }
 
-
-function hideSection() {
-    document.getElementById('overlay').classList.remove('active');
-    document.body.style.overflow = 'auto'; // Scroll enable
-}
 // Reviews ko fetch aur display karne ka function
 function displayReviews() {
     const reviewsList = document.getElementById('reviewsList');

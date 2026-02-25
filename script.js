@@ -208,18 +208,38 @@ function saveReview() {
 
 function displayReviews() {
     const reviewsList = document.getElementById('reviewsList');
+    const viewMoreBtn = document.getElementById('viewMoreBtn');
+    
     db.collection("reviews").orderBy("timestamp", "desc").onSnapshot((querySnapshot) => {
         reviewsList.innerHTML = "";
+        let count = 0;
+        
         querySnapshot.forEach((doc) => {
+            count++;
             const data = doc.data();
-            reviewsList.innerHTML += `
-                <div class="wisdom-card" style="border-left: 5px solid #ff9933; margin-bottom: 10px; padding: 10px;">
-                    <p>"${data.review}"</p>
-                    <small><strong>- ${data.name}</strong></small>
-                </div>`;
+            const reviewHtml = `
+                <div class="wisdom-card" style="border-left: 5px solid #ff9933; margin-bottom: 15px; padding: 15px; ${count > 3 ? 'display: none;' : ''}">
+                    <p style="font-style: italic; color: #333;">"${data.review}"</p>
+                    <small style="color: #B22222;"><strong>- ${data.name}</strong></small>
+                </div>
+            `;
+            reviewsList.innerHTML += reviewHtml;
         });
+
+        // Agar 3 se zyada review hain toh button dikhayein
+        if (count > 3) {
+            viewMoreBtn.style.display = "block";
+        }
     });
 }
+
+// Button click hone par baki reviews dikhane ke liye
+function toggleReviews() {
+    const hiddenReviews = document.querySelectorAll('#reviewsList .wisdom-card[style*="display: none"]');
+    hiddenReviews.forEach(rev => rev.style.display = "block");
+    document.getElementById('viewMoreBtn').style.display = "none";
+}
+
 
 // Initialize Reviews
 displayReviews();

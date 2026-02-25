@@ -7,6 +7,9 @@
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Yantra+Manav:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
 </head>
 <body>
 
@@ -21,7 +24,15 @@
         <div class="menu-item" onclick="showSection('hawan')"><i class="fas fa-fire"></i><p>हवन विभाग</p></div>
         <div class="menu-item" onclick="showSection('kundli')"><i class="fas fa-scroll"></i><p>कुंडली विभाग</p></div>
         <div class="menu-item" onclick="showSection('mantra')"><i class="fas fa-hands-praying"></i><p>मंत्र विभाग</p></div>
-    </div>
+    <div class="wisdom-card">
+    <h3>✍️ अपना अनुभव साझा करें</h3>
+    <input type="text" id="userName" placeholder="आपका नाम" style="width:90%; padding:10px; margin-bottom:10px; border-radius:5px; border:1px solid #ccc;">
+    <textarea id="userReview" placeholder="आपका अनुभव..." style="width:90%; padding:10px; height:80px; border-radius:5px; border:1px solid #ccc;"></textarea>
+    <br>
+    <button onclick="saveReview()" style="background:#ff9933; color:white; border:none; padding:12px 25px; border-radius:5px; cursor:pointer; font-weight:bold; margin-top:10px;">अनुभव भेजें (Submit)</button>
+</div>
+
+</div>
 
     <div class="wisdom-card">
         <h3>✨ आज का कल्याणकारी विचार</h3>

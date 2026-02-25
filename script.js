@@ -178,6 +178,7 @@ async function saveReview() {
 }
 
 // रिव्यू कार्ड्स दिखाने का प्रीमियम फंक्शन
+// रिव्यूज दिखाने का फंक्शन
 function displayReviews() {
     const reviewsList = document.getElementById('reviewsList');
     const viewMoreBtn = document.getElementById('viewMoreBtn');
@@ -190,34 +191,30 @@ function displayReviews() {
             count++;
             const data = doc.data();
             
-            // प्रीमियम बड़े कार्ड्स (बिना स्टार्स के)
             const reviewHtml = `
                 <div class="wisdom-card" style="
                     background: #fff;
                     border-radius: 12px;
                     padding: 0;
                     margin: 0 auto 25px auto;
-                    width: 92%; 
+                    width: 95%; /* पूरी स्क्रीन के करीब लाने के लिए */
                     box-shadow: 0 8px 20px rgba(0,0,0,0.06);
                     border: 1px solid #f1f1f1;
                     overflow: hidden;
                     display: ${count > 3 ? 'none' : 'block'};">
                     
                     ${data.photo ? `
-                        <div style="width: 100%; overflow: hidden;">
-                            <img src="${data.photo}" style="width:100%; max-height:300px; object-fit:cover; display:block;">
+                        <div style="width: 100%;">
+                            <img src="${data.photo}" style="width:100%; max-height:400px; object-fit:cover; display:block;">
                         </div>
                     ` : ''}
 
                     <div style="padding: 20px; text-align: left;">
-                        <p style="font-size: 1.1rem; color: #444; line-height: 1.6; margin-bottom: 15px;">
+                        <p style="font-size: 1.1rem; color: #444; line-height: 1.6; margin-bottom: 12px;">
                             "${data.review}"
                         </p>
-                        <div style="display: flex; align-items: center; border-top: 1px solid #f8f8f8; padding-top: 15px;">
-                            <span style="background: #f0f0f0; color: #555; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 12px; font-size: 0.9rem;">👤</span>
-                            <span style="color: #B22222; font-weight: bold; font-size: 1rem;">
-                                ${data.name}
-                            </span>
+                        <div style="display: flex; align-items: center; border-top: 1px solid #f8f8f8; padding-top: 10px;">
+                            <span style="color: #B22222; font-weight: bold;">👤 ${data.name}</span>
                         </div>
                     </div>
                 </div>
@@ -230,33 +227,3 @@ function displayReviews() {
         }
     });
 }
-
-// 'और भी देखें' बटन का फंक्शन
-function toggleReviews() {
-    const cards = document.querySelectorAll('#reviewsList .wisdom-card');
-    cards.forEach(card => card.style.display = "block");
-    document.getElementById('viewMoreBtn').style.display = "none";
-}
-
-// पेज लोड होते ही रिव्यू दिखाना शुरू करें
-displayReviews();
-
-          
-            reviewsList.innerHTML += reviewHtml;
-        });
-
-        if (count > 3) {
-            viewMoreBtn.style.display = "block";
-        }
-    });
-}
-
-function toggleReviews() {
-    const hiddenReviews = document.querySelectorAll('#reviewsList .wisdom-card[style*="display: none"]');
-    hiddenReviews.forEach(rev => rev.style.display = "block");
-    document.getElementById('viewMoreBtn').style.display = "none";
-}
-
-// Initialize Reviews
-displayReviews();
-                      

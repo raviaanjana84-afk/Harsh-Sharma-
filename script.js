@@ -1,3 +1,41 @@
+// Firebase Configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyDO8kxU1t9zcfD0MXf6vhLlE3FR_CUKycE",
+  authDomain: "harsh-sharma-website-f01ac.firebaseapp.com",
+  projectId: "harsh-sharma-website-f01ac",
+  storageBucket: "harsh-sharma-website-f01ac.firebasestorage.app",
+  messagingSenderId: "8698683996",
+  appId: "1:8698683996:web:58cd2b05fcf71646e0bc99"
+};
+
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+// Review save karne ka function
+function saveReview() {
+    const name = document.getElementById('userName').value;
+    const review = document.getElementById('userReview').value;
+
+    if(name && review) {
+        db.collection("reviews").add({
+            name: name,
+            review: review,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        })
+        .then(() => {
+            alert("आपका अनुभव सफलतापूर्वक साझा किया गया!");
+            document.getElementById('userName').value = '';
+            document.getElementById('userReview').value = '';
+        })
+        .catch((error) => {
+            console.error("Error adding document: ", error);
+        });
+    } else {
+        alert("कृपया नाम और अनुभव दोनों भरें।");
+    }
+}
+
 const spiritualData = {
     pujan: `
         <h2 style="color: #B22222; margin-bottom: 20px;">🕉️ पूजन शुक्ल विभाग</h2>

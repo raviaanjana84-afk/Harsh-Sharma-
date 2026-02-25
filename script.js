@@ -87,14 +87,24 @@ const spiritualData = {
             <p>विभिन्न बाधाओं के निवारण हेतु सिद्ध मंत्रों का जाप एवं वेदोक्त रीति से अनुष्ठान संपन्न कराए जाते हैं।</p>
         </div>`
 };
-
 function showSection(key) {
     const overlay = document.getElementById('overlay');
     const content = document.getElementById('overlay-content');
     content.innerHTML = spiritualData[key];
+    
+    // Sirf class add karne se kaam nahi chal raha, isliye style bhi change karein
+    overlay.style.display = 'flex'; 
     overlay.classList.add('active');
-    document.body.style.overflow = 'hidden'; // Scroll disable
+    document.body.style.overflow = 'hidden'; // Scroll rokne ke liye
 }
+
+function hideSection() {
+    const overlay = document.getElementById('overlay');
+    overlay.style.display = 'none'; // Box ko wapas chupane ke liye
+    overlay.classList.remove('active');
+    document.body.style.overflow = 'auto'; // Scroll chalu karne ke liye
+}
+
 
 function hideSection() {
     document.getElementById('overlay').classList.remove('active');

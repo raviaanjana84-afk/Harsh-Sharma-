@@ -155,3 +155,20 @@ header h1 {
     border-radius: 10px; 
     text-
     
+/* किसी भी चीज़ को क्लिक से रोकने वाली इनविजिबल लेयर को हटाना */
+.container, .menu-grid, .menu-item, .float-box, .btn-float {
+    pointer-events: auto !important;
+    position: relative;
+    z-index: 999 !important;
+}
+
+/* ओवरले को तभी एक्टिव करें जब हम चाहें */
+.overlay {
+    pointer-events: none; /* जब बंद हो तो क्लिक पास होने दे */
+}
+
+.overlay.active {
+    pointer-events: auto !important; /* जब खुले तो खुद क्लिक ले */
+    display: flex !important;
+}
+    

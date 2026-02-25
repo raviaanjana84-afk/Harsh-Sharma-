@@ -4,111 +4,181 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>पंडित हर्ष शर्मा | उज्जैन आध्यात्मिक सेवाएँ</title>
-    <link rel="stylesheet" href="style.css">
+    
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Yantra+Manav:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-storage-compat.js"></script>
 
+    <style>
+        :root { --main-red: #B22222; --gold: #FFD700; --orange: #ff9933; }
+        body { font-family: 'Poppins', sans-serif; margin: 0; padding: 0; background: #fdf5e6; color: #333; line-height: 1.6; }
+        
+        header { padding: 40px 20px; text-align: center; background: var(--main-red); color: white; border-bottom: 5px solid var(--gold); }
+        header h1 { font-size: 2.2rem; margin: 0; color: var(--gold); text-shadow: 2px 2px 4px rgba(0,0,0,0.5); }
+        
+        .menu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 15px; padding: 20px; max-width: 1000px; margin: auto; }
+        .menu-item { background: white; padding: 20px; border-radius: 12px; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.1); cursor: pointer; transition: 0.3s; border: 1px solid #eee; }
+        .menu-item:hover { transform: translateY(-5px); border-color: var(--orange); }
+        .menu-item i { font-size: 2rem; color: var(--main-red); margin-bottom: 10px; }
+        
+        .wisdom-card, .featured-video { background: white; margin: 20px auto; padding: 20px; border-radius: 15px; max-width: 600px; box-shadow: 0 5px 15px rgba(0,0,0,0.08); text-align: center; border-left: 5px solid var(--orange); }
+        
+        .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 10px; margin-top: 15px; }
+        .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+
+        .review-box { border-bottom: 1px solid #eee; padding: 15px 0; text-align: left; }
+        .review-box img { max-width: 100%; border-radius: 8px; margin-top: 10px; display: block; }
+        .review-name { font-weight: bold; color: var(--main-red); margin-bottom: 5px; }
+
+        .float-box { position: fixed; bottom: 20px; right: 20px; display: flex; flex-direction: column; gap: 10px; z-index: 1000; }
+        .btn-float { width: 55px; height: 55px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; text-decoration: none; font-size: 24px; box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
+        .wa { background: #25D366; } .call { background: #007bff; }
+
+        footer { background: #333; color: white; text-align: center; padding: 30px 20px; margin-top: 40px; }
+        .social-links a { color: white; font-size: 24px; margin: 0 10px; transition: 0.3s; }
+        .social-links a:hover { color: var(--gold); }
+
+        /* Review Input Styling */
+        input, textarea { width: 90%; padding: 12px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 8px; font-family: inherit; }
+        button { background: var(--orange); color: white; border: none; padding: 12px 25px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 1rem; }
+    </style>
 </head>
 <body>
 
-    <header style="padding: 30px 20px; text-align: center; background: #B22222; color: white;">
-    <h1 style="font-size: 2.2rem; margin-bottom: 5px; color: #FFD700; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">
-        पंडित हर्ष शर्मा (उज्जैन)
-    </h1>
-    <p style="font-size: 1.1rem; opacity: 0.9; margin-bottom: 15px;">
-        पधारें महाकाल की नगरी उज्जैन | श्रीमद भगवत गीता प्रचारक
-    </p>
-
-    <div style="padding-top: 15px; border-top: 1px solid rgba(255,215,0,0.3); max-width: 400px; margin: 0 auto;">
-        <p style="color: #FFD700; font-size: 1rem; font-weight: bold; line-height: 1.6; font-style: italic; margin: 0;">
+<header>
+    <h1>पंडित हर्ष शर्मा (उज्जैन)</h1>
+    <p>पधारें महाकाल की नगरी उज्जैन | श्रीमद भगवत गीता प्रचारक</p>
+    <div style="margin-top: 15px; border-top: 1px solid rgba(255,215,0,0.3); padding-top: 10px;">
+        <p style="color: var(--gold); font-size: 0.9rem; font-style: italic;">
             ॐ धरणीगर्भसंभूतं विद्युत्कांतिसमप्रभम्।<br>
             कुमारं शक्तिहस्तं तं मंगलं प्रणमाम्यहम॥
         </p>
     </div>
 </header>
 
+<div class="menu-grid">
+    <div class="menu-item"><i class="fas fa-om"></i><p>पूजन विभाग</p></div>
+    <div class="menu-item"><i class="fas fa-fire"></i><p>हवन विभाग</p></div>
+    <div class="menu-item"><i class="fas fa-scroll"></i><p>कुंडली विभाग</p></div>
+    <div class="menu-item"><i class="fas fa-hands-praying"></i><p>मंत्र विभाग</p></div>
+</div>
 
-
-    <div class="menu-grid">
-        <div class="menu-item" onclick="showSection('pujan')"><i class="fas fa-om"></i><p>पूजन विभाग</p></div>
-        <div class="menu-item" onclick="showSection('hawan')"><i class="fas fa-fire"></i><p>हवन विभाग</p></div>
-        <div class="menu-item" onclick="showSection('kundli')"><i class="fas fa-scroll"></i><p>कुंडली विभाग</p></div>
-        <div class="menu-item" onclick="showSection('mantra')"><i class="fas fa-hands-praying"></i><p>मंत्र विभाग</p></div>
 <div class="wisdom-card">
-    <h3 style="text-align: center;">🙏 अपना अनुभव साझा करें</h3>
-    <input type="text" id="userName" placeholder="आपका नाम" style="width:95%; padding:10px; margin-bottom:10px; border-radius:5px; border:1px solid #ddd;">
-    <textarea id="userReview" placeholder="अपना अनुभव लिखें..." style="width:95%; padding:10px; height:80px; margin-bottom:10px; border-radius:5px; border:1px solid #ddd;"></textarea>
-    
-    <p style="font-size: 14px; margin-bottom: 5px; color: #666; text-align: left;">📸 फोटो जोड़ें (Optional):</p>
-    <input type="file" id="userPhoto" accept="image/*" style="margin-bottom:15px; width: 100%;">
-
-    <button onclick="saveReview()" style="background:#ff9933; color:white; width:100%; padding:12px; border:none; border-radius:8px; font-weight:bold; cursor:pointer;">
-        ✨ अनुभव साझा करें ✨
-    </button>
+    <h3>🙏 अपना अनुभव साझा करें</h3>
+    <input type="text" id="userName" placeholder="आपका नाम">
+    <textarea id="userReview" placeholder="अपना अनुभव लिखें..."></textarea>
+    <p style="font-size: 14px; text-align: left; margin-left: 5%;">📸 फोटो जोड़ें (Optional):</p>
+    <input type="file" id="userPhoto" accept="image/*" style="border:none;">
+    <button onclick="saveReview()">✨ अनुभव साझा करें ✨</button>
 </div>
-        
 
-    <div class="wisdom-card">
-        <h3>✨ आज का कल्याणकारी विचार</h3>
-        <p id="daily-quote">"कर्मण्येवाधिकारस्ते मा फलेषु कदाचन।" - श्रीमद भगवत गीता</p>
-    </div>
-
-    <div class="featured-video">
-        <h3>📺 विशेष प्रवचन एवं दर्शन</h3>
-        <div class="video-container">
-            <iframe src="https://www.youtube.com/embed?listType=user_uploads&list=PanditHarshSharmaUjjain" frameborder="0" allowfullscreen></iframe>
-        </div>
-<div id="reviewsContainer">
-    <div id="reviewsList">
-        </div>
-    <button id="viewMoreBtn" onclick="toggleReviews()" style="width: 100%; padding: 10px; background: none; border: 1px solid #FF9933; color: #FF9933; margin-top: 10px; border-radius: 5px; font-weight: bold; display: none;">
-        और भी अनुभव देखें 👇
-    </button>
-</div>
-        
 <div class="featured-video">
-    <h3>📸 पावन दर्शन (Gallery)</h3>
-    <div class="gallery-grid">
-        <img src="https://images.unsplash.com/photo-1544065603-997f742f36f6?q=80&w=400" alt="Pujan 1">
-        <img src="https://images.unsplash.com/photo-1604543163833-3b60f124430e?q=80&w=400" alt="Pujan 2">
-    </div>
-</div>
-        
+    <h3>📺 विशेष दर्शन एवं प्रवचन</h3>
+    <div class="video-container">
+        <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allowfullscreen></iframe>
     </div>
 </div>
 
-<div id="overlay" class="overlay">
-    <button class="close-btn" onclick="hideSection()">&times;</button>
-    
-    <div id="overlay-content" class="overlay-inner"></div>
+<div class="wisdom-card">
+    <h3>💬 भक्तों के अनुभव</h3>
+    <div id="reviewsList">
+        <p style="color:#888;">अभी कोई अनुभव नहीं है। पहले आप लिखें!</p>
+    </div>
 </div>
 
 <div class="float-box">
-    <a href="https://api.whatsapp.com/send?phone=918319714682&text=Jai%20Shree%20Krishna" class="btn-float wa" target="_blank"><i class="fab fa-whatsapp"></i></a>
+    <a href="https://wa.me/918319714682" class="btn-float wa" target="_blank"><i class="fab fa-whatsapp"></i></a>
     <a href="tel:+918319714682" class="btn-float call"><i class="fas fa-phone"></i></a>
 </div>
 
 <footer>
     <div class="social-links">
         <a href="https://www.youtube.com/@PanditHarshSharmaUjjain" target="_blank"><i class="fab fa-youtube"></i></a>
-<div style="text-align: center; padding: 20px 0;">
-    <a href="https://www.instagram.com/harshu.0005?igsh=NmVvanFqZzBremFn" target="_blank" style="color: white; font-size: 28px; margin: 0 15px; text-decoration: none;">
-        <i class="fab fa-instagram"></i>
-    </a>
-
-    <a href="https://www.facebook.com/share/1C2H6wSqTN/" target="_blank" style="color: white; font-size: 28px; margin: 0 15px; text-decoration: none;">
-        <i class="fab fa-facebook"></i>
-    </a>
-</div>
-        
-
+        <a href="https://www.instagram.com/harshu.0005" target="_blank"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.facebook.com/share/1C2H6wSqTN/" target="_blank"><i class="fab fa-facebook"></i></a>
     </div>
-    <p style="margin-top:15px;">Designed with ❤️ by Ravi Anjana</p>
+    <p style="margin-top:20px; font-size: 0.8rem; opacity: 0.7;">Designed with ❤️ by Ravi Anjana</p>
 </footer>
 
-<script src="script.js"></script>
+<script>
+    // --- FIREBASE CONFIGURATION ---
+    // Firebase Console से अपनी डिटेल्स यहाँ भरें:
+    const firebaseConfig = {
+        apiKey: "YOUR_API_KEY",
+        authDomain: "YOUR_PROJECT.firebaseapp.com",
+        projectId: "YOUR_PROJECT_ID",
+        storageBucket: "YOUR_PROJECT.appspot.com",
+        messagingSenderId: "YOUR_SENDER_ID",
+        appId: "YOUR_APP_ID"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+    const storage = firebase.storage();
+
+    // --- SAVE REVIEW FUNCTION ---
+    async function saveReview() {
+        const name = document.getElementById('userName').value;
+        const review = document.getElementById('userReview').value;
+        const photoFile = document.getElementById('userPhoto').files[0];
+
+        if (!name || !review) {
+            alert("कृपया नाम और संदेश दोनों भरें।");
+            return;
+        }
+
+        let imageUrl = "";
+
+        try {
+            // If photo is selected, upload to Firebase Storage
+            if (photoFile) {
+                const storageRef = storage.ref('reviews/' + photoFile.name);
+                await storageRef.put(photoFile);
+                imageUrl = await storageRef.getDownloadURL();
+            }
+
+            // Save to Firestore
+            await db.collection("reviews").add({
+                name: name,
+                text: review,
+                image: imageUrl,
+                timestamp: firebase.firestore.FieldValue.serverTimestamp()
+            });
+
+            alert("आपका अनुभव साझा कर दिया गया है! धन्यवाद।");
+            location.reload(); // Refresh to show new review
+        } catch (error) {
+            console.error("Error: ", error);
+            alert("कुछ गड़बड़ हुई। कृपया Firebase Settings चेक करें।");
+        }
+    }
+
+    // --- LOAD REVIEWS ---
+    function loadReviews() {
+        const list = document.getElementById('reviewsList');
+        db.collection("reviews").orderBy("timestamp", "desc").onSnapshot((snapshot) => {
+            list.innerHTML = "";
+            snapshot.forEach((doc) => {
+                const data = doc.data();
+                const div = document.createElement('div');
+                div.className = 'review-box';
+                div.innerHTML = `
+                    <div class="review-name">${data.name}</div>
+                    <div class="review-text">${data.text}</div>
+                    ${data.image ? `<img src="${data.image}" alt="Review Photo">` : ''}
+                `;
+                list.appendChild(div);
+            });
+        });
+    }
+
+    // Load reviews on startup
+    window.onload = loadReviews;
+</script>
+
 </body>
 </html>
-

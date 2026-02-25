@@ -214,26 +214,46 @@ window.onpopstate = function() {
 };
 
 // 4. Review System
-function saveReview() {
+async function saveReview() {
     const nameInput = document.getElementById('userName');
     const reviewInput = document.getElementById('userReview');
+    const photoInput = document.getElementById('userPhoto');
+    
     const name = nameInput.value.trim();
     const review = reviewInput.value.trim();
+    const photoFile = photoInput.files[0];
+    let photoUrl = "";
 
-    if(name && review) {
-        db.collection("reviews").add({
-            name: name,
-            review: review,
-            timestamp: firebase.firestore.FieldValue.serverTimestamp()
-        }).then(() => {
-            alert("🙏 आपका अनुभव साझा किया गया!");
+    if (name && review) {
+        try {
+            // 1. Agar photo hai toh pehle Storage mein upload karein
+            if (photoFile) {
+                const storageRef = firebase.storage().ref('reviews/' + Date.now() + "_" + photoFile.name);
+                const snapshot = await storageRef.put(photoFile);
+                photoUrl = await snapshot.ref.getDownloadURL();
+            }
+
+            // 2. Phir Firestore mein data save karein
+            await db.collection("reviews").add({
+                name: name,
+                review: review,
+                photo: photoUrl,
+                timestamp: firebase.firestore.FieldValue.serverTimestamp()
+            });
+
+            alert("🙏 आपका अनुभव फोटो के साथ साझा किया गया!");
             nameInput.value = '';
             reviewInput.value = '';
-        });
+            photoInput.value = '';
+        } catch (error) {
+            console.error("Error:", error);
+            alert("Kuch galti hui, kripya fir koshish karein.");
+        }
     } else {
         alert("कृपया नाम और अनुभव दोनों भरें।");
     }
 }
+
 
 function displayReviews() {
     const reviewsList = document.getElementById('reviewsList');

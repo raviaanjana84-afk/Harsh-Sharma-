@@ -142,14 +142,20 @@ const spiritualData = {
 function showSection(key) {
     const overlay = document.getElementById('overlay');
     const content = document.getElementById('overlay-content');
+    
+    // Agar data nahi mil raha toh return kar jaye
+    if (!spiritualData[key]) return;
+
     content.innerHTML = spiritualData[key];
     
-    overlay.style.display = 'flex'; // Box ko dikhane ke liye
-    document.body.style.overflow = 'hidden'; // Screen scroll rokne ke liye
+    // Sabse zaroori: Ise flex karna hai taaki box dikhe
+    overlay.style.display = 'flex'; 
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
 
-    // ✨ Ye line back button ko handle karne ke liye "History State" banati hai
     window.history.pushState({overlayOpen: true}, ""); 
 }
+
 
 
 function hideSection() {

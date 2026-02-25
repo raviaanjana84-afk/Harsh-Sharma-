@@ -88,15 +88,27 @@ const spiritualData = {
 };
 
 // 3. Navigation Functions 📍
+
 function showSection(key) {
     const overlay = document.getElementById('overlay');
-    const content = document.getElementById('overlay-content');
+    const content = document.getElementById('overlay-body'); // हमने बॉडी का उपयोग किया है
+    
     if (!spiritualData[key]) return;
     
     content.innerHTML = spiritualData[key];
+    
+    // क्लिक लॉक खोलने के लिए सही तरीका
     overlay.style.display = 'flex'; 
     overlay.classList.add('active');
-    document.body.style.overflow = 'hidden';
+    
+    document.body.style.overflow = 'hidden'; // पीछे का पेज स्क्रोल न हो
+}
+
+function hideSection() {
+    const overlay = document.getElementById('overlay');
+    overlay.style.display = 'none';
+    overlay.classList.remove('active');
+    document.body.style.overflow = 'auto';
 }
 
 function hideSection() {
@@ -162,19 +174,7 @@ let reviewsExpanded = false;
 
 function toggleReviews() {
     const hiddenReviews = document.querySelectorAll('.review-card-hidden');
-    const btn = document.getElementById('viewMoreBtn');
-    
-    reviewsExpanded = !reviewsExpanded;
-    
-    hiddenReviews.forEach(el => {
-        el.style.display = reviewsExpanded ? 'block' : 'none';
-    });
-    
-    btn.innerText = reviewsExpanded ? "कम अनुभव देखें 👆" : "और भी अनुभव देखें 👇";
-}
-
-function displayReviews() {
-    const reviewsList = document.getElementById('reviewsList');
+    const btn = document.getElementById('viet.getElementById('reviewsList');
     const viewMoreBtn = document.getElementById('viewMoreBtn');
     
     db.collection("reviews").orderBy("timestamp", "desc").onSnapshot((querySnapshot) => {

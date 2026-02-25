@@ -121,8 +121,9 @@ function openWhatsApp(service) {
 window.onpopstate = function() { hideSection(); };
 
 // 4. Review System ✍️
+// 4. Review System ✍️ (Final & Clean Code)
 
-// अनुभव सेव करने का फंक्शन
+// अनुभव और फोटो सेव करने का फंक्शन
 async function saveReview() {
     const nameInput = document.getElementById('userName');
     const reviewInput = document.getElementById('userReview');
@@ -135,7 +136,7 @@ async function saveReview() {
 
     if (name && review) {
         try {
-            // ImgBB पर फोटो अपलोड
+            // 1. ImgBB पर फोटो अपलोड (अगर चुनी गई है)
             if (photoFile) {
                 const formData = new FormData();
                 formData.append("image", photoFile);
@@ -151,7 +152,7 @@ async function saveReview() {
                 }
             }
 
-            // Firestore में डेटा सेव करना
+            // 2. Firestore में डेटा सेव करना
             await db.collection("reviews").add({
                 name: name,
                 review: review,
@@ -159,8 +160,9 @@ async function saveReview() {
                 timestamp: firebase.firestore.FieldValue.serverTimestamp()
             });
 
-            alert("🙏 आपका अनुभव फोटो के साथ साझा किया गया!");
+            alert("🙏 आपका अनुभव साझा किया गया!");
             
+            // फॉर्म खाली करना और रिफ्रेश करना
             nameInput.value = '';
             reviewInput.value = '';
             photoInput.value = '';
@@ -168,14 +170,14 @@ async function saveReview() {
 
         } catch (error) {
             console.error("Error:", error);
-            alert("कुछ गलती हुई, कृपया फिर कोशिश करें।");
+            alert("कुछ तकनीकी समस्या आई, फिर से कोशिश करें।");
         }
     } else {
-        alert("कृपया नाम और अनुभव दोनों भरें।");
+        alert("कृपया अपना नाम और अनुभव भरें।");
     }
 }
 
-// अनुभव दिखाने का फंक्शन (प्रीमियम कार्ड)
+// रिव्यू कार्ड्स दिखाने का प्रीमियम फंक्शन
 function displayReviews() {
     const reviewsList = document.getElementById('reviewsList');
     const viewMoreBtn = document.getElementById('viewMoreBtn');
@@ -188,7 +190,7 @@ function displayReviews() {
             count++;
             const data = doc.data();
             
-                        // ✨ सितारों के बिना प्रीमियम और साफ़ इंटरफेस ✨
+            // प्रीमियम बड़े कार्ड्स (बिना स्टार्स के)
             const reviewHtml = `
                 <div class="wisdom-card" style="
                     background: #fff;
@@ -220,6 +222,25 @@ function displayReviews() {
                     </div>
                 </div>
             `;
+            reviewsList.innerHTML += reviewHtml;
+        });
+
+        if (count > 3) {
+            viewMoreBtn.style.display = "block";
+        }
+    });
+}
+
+// 'और भी देखें' बटन का फंक्शन
+function toggleReviews() {
+    const cards = document.querySelectorAll('#reviewsList .wisdom-card');
+    cards.forEach(card => card.style.display = "block");
+    document.getElementById('viewMoreBtn').style.display = "none";
+}
+
+// पेज लोड होते ही रिव्यू दिखाना शुरू करें
+displayReviews();
+
           
             reviewsList.innerHTML += reviewHtml;
         });

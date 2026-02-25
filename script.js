@@ -188,34 +188,39 @@ function displayReviews() {
             count++;
             const data = doc.data();
             
+                        // ✨ सितारों के बिना प्रीमियम और साफ़ इंटरफेस ✨
             const reviewHtml = `
                 <div class="wisdom-card" style="
                     background: #fff;
                     border-radius: 12px;
                     padding: 0;
-                    margin-bottom: 25px;
+                    margin: 0 auto 25px auto;
+                    width: 92%; 
                     box-shadow: 0 8px 20px rgba(0,0,0,0.06);
                     border: 1px solid #f1f1f1;
                     overflow: hidden;
-                    ${count > 3 ? 'display: none;' : ''}">
+                    display: ${count > 3 ? 'none' : 'block'};">
                     
                     ${data.photo ? `
-                        <img src="${data.photo}" style="width:100%; max-height:280px; object-fit:cover; display:block;">
+                        <div style="width: 100%; overflow: hidden;">
+                            <img src="${data.photo}" style="width:100%; max-height:300px; object-fit:cover; display:block;">
+                        </div>
                     ` : ''}
 
-                    <div style="padding: 15px; text-align: left;">
-                        <p style="font-size: 1.05rem; color: #444; line-height: 1.6; margin-bottom: 12px;">
+                    <div style="padding: 20px; text-align: left;">
+                        <p style="font-size: 1.1rem; color: #444; line-height: 1.6; margin-bottom: 15px;">
                             "${data.review}"
                         </p>
-                        <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #f8f8f8; padding-top: 10px;">
-                            <span style="color: #B22222; font-weight: bold; font-size: 0.9rem;">
-                               👤 ${data.name}
+                        <div style="display: flex; align-items: center; border-top: 1px solid #f8f8f8; padding-top: 15px;">
+                            <span style="background: #f0f0f0; color: #555; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 12px; font-size: 0.9rem;">👤</span>
+                            <span style="color: #B22222; font-weight: bold; font-size: 1rem;">
+                                ${data.name}
                             </span>
-                            <span style="color: #FFD700; font-size: 0.8rem;">⭐⭐⭐⭐⭐</span>
                         </div>
                     </div>
                 </div>
             `;
+          
             reviewsList.innerHTML += reviewHtml;
         });
 

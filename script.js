@@ -87,17 +87,19 @@ const spiritualData = {
             <p>विभिन्न बाधाओं के निवारण हेतु सिद्ध मंत्रों का जाप एवं वेदोक्त रीति से अनुष्ठान संपन्न कराए जाते हैं।</p>
         </div>`
 };
+// Isse replace karein (Line 91 ke paas)
 function showSection(key) {
     const overlay = document.getElementById('overlay');
     const content = document.getElementById('overlay-content');
     content.innerHTML = spiritualData[key];
     
-    overlay.style.display = 'flex';
-    document.body.style.overflow = 'hidden';
+    overlay.style.display = 'flex'; // Box ko dikhane ke liye
+    document.body.style.overflow = 'hidden'; // Screen scroll rokne ke liye
 
-    // Browser history mein ek state add karein taaki back karne par sirf overlay band ho
-    window.history.pushState({overlay: true}, "");
+    // ✨ Ye line back button ko handle karne ke liye "History State" banati hai
+    window.history.pushState({overlayOpen: true}, ""); 
 }
+
 
 function hideSection() {
     const overlay = document.getElementById('overlay');
@@ -139,3 +141,14 @@ function displayReviews() {
 
 // Page load hote hi function chalu karein
 displayReviews();
+// File ke aakhir mein naya add-on karein
+window.onpopstate = function(event) {
+    // Jab user phone ka back button dabaye
+    hideSection();
+};
+
+function hideSection() {
+    const overlay = document.getElementById('overlay');
+    overlay.style.display = 'none'; // Box band karein
+    document.body.style.overflow = 'auto'; // Scroll wapas chalu karein
+}

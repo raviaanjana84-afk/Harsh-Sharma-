@@ -192,3 +192,21 @@ footer { background: #1a1a1a; color: white; text-align: center; padding: 40px; }
     margin-bottom: 10px;
     font-weight: 600 !important;
 }
+/* Reviews container ki height fix karne ke liye */
+#reviewsList {
+    max-height: 400px; /* Isse zyada hone par scroll bar aa jayega */
+    overflow-y: auto;  /* Vertical scroll enable karega */
+    padding: 10px;
+    background: #fdfdfd;
+    border-radius: 10px;
+    border: 1px solid #eee;
+}
+
+/* Scrollbar ko thoda sunder (thin) banane ke liye */
+#reviewsList::-webkit-scrollbar {
+    width: 6px;
+}
+#reviewsList::-webkit-scrollbar-thumb {
+    background: #FF9933; 
+    border-radius: 10px;
+}

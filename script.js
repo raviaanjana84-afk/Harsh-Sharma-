@@ -92,11 +92,24 @@ function showSection(key) {
     const content = document.getElementById('overlay-content');
     content.innerHTML = spiritualData[key];
     
-    // Sirf class add karne se kaam nahi chal raha, isliye style bhi change karein
-    overlay.style.display = 'flex'; 
-    overlay.classList.add('active');
-    document.body.style.overflow = 'hidden'; // Scroll rokne ke liye
+    overlay.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+
+    // Browser history mein ek state add karein taaki back karne par sirf overlay band ho
+    window.history.pushState({overlay: true}, "");
 }
+
+function hideSection() {
+    const overlay = document.getElementById('overlay');
+    overlay.style.display = 'none';
+    document.body.style.overflow = 'auto';
+}
+
+// Mobile back button ko handle karne ke liye
+window.onpopstate = function(event) {
+    hideSection();
+};
+
 
 function hideSection() {
     const overlay = document.getElementById('overlay');

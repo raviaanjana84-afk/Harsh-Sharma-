@@ -96,7 +96,7 @@ function hideSection() {
 
 // WhatsApp Booking Function
 function openWhatsApp(service) {
-    const phone = "91918319714682"; 
+    const phone = "918319714682"; 
     const msg = `प्रणाम पंडित जी, मुझे "${service}" के बारे में जानकारी और बुकिंग चाहिए।`;
     window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, '_blank');
 }

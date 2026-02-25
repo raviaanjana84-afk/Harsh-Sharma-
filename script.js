@@ -14,8 +14,11 @@ const db = firebase.firestore();
 
 // Review save karne ka function
 function saveReview() {
-    const name = document.getElementById('userName').value;
-    const review = document.getElementById('userReview').value;
+    const nameInput = document.getElementById('userName');
+    const reviewInput = document.getElementById('userReview');
+    
+    const name = nameInput.value.trim();
+    const review = reviewInput.value.trim();
 
     if(name && review) {
         db.collection("reviews").add({
@@ -24,17 +27,19 @@ function saveReview() {
             timestamp: firebase.firestore.FieldValue.serverTimestamp()
         })
         .then(() => {
-            alert("आपका अनुभव सफलतापूर्वक साझा किया गया!");
-            document.getElementById('userName').value = '';
-            document.getElementById('userReview').value = '';
+            alert("🙏 आपका अनुभव सफलतापूर्वक साझा किया गया!");
+            nameInput.value = '';
+            reviewInput.value = '';
         })
         .catch((error) => {
-            console.error("Error adding document: ", error);
+            console.error("Error: ", error);
+            alert("Kuch galti hui hai: " + error.message);
         });
     } else {
         alert("कृपया नाम और अनुभव दोनों भरें।");
     }
 }
+
 
 const spiritualData = {
     pujan: `

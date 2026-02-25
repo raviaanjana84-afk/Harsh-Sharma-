@@ -26,20 +26,21 @@ header h1 { font-family: 'Yantra Manav', sans-serif; font-size: 2.2rem; margin-b
     height: 100%; 
     background: rgba(0,0,0,0.9); 
     z-index: 1000; 
-    display: none; 
+    display: none; /* JavaScript ise badal kar 'flex' kar degi */
     justify-content: center; 
     align-items: center; 
 }
 
 .close-btn { 
     position: absolute; 
-    top: 20px; 
-    right: 20px; 
-    font-size: 40px; 
+    top: 15px;      /* Screen ke upar se thoda niche */
+    right: 15px;    /* Screen ke kinare se thoda andar */
+    font-size: 35px; 
     color: white; 
     cursor: pointer; 
     z-index: 1001; 
 }
+
 
 /* Floating Buttons */
 .float-box { position: fixed; bottom: 20px; right: 20px; display: flex; flex-direction: column; gap: 10px; z-index: 100; }

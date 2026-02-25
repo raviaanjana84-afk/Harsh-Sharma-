@@ -153,3 +153,42 @@ footer { background: #1a1a1a; color: white; text-align: center; padding: 40px; }
     color: #2c3e50;
     list-style: none;
 }
+/* --- Overlay Content ko Chamkane ke liye --- */
+#overlay-content {
+    background: #ffffff; /* Shuddh safed background taaki text saaf dikhe */
+    padding: 25px;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 500px;
+    max-height: 80vh;
+    overflow-y: auto;
+    color: #1a1a1a !important; /* Ekdum gehra kaala text */
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+#overlay-content h2 {
+    color: #B22222 !important; 
+    font-size: 24px !important;
+    font-weight: 800 !important;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+#overlay-content p {
+    color: #333 !important;
+    font-size: 17px !important;
+    line-height: 1.6 !important;
+    font-weight: 500 !important;
+}
+
+#overlay-content ul {
+    text-align: left;
+    margin: 15px 0;
+}
+
+#overlay-content li {
+    color: #1a1a1a !important;
+    font-size: 16px !important;
+    margin-bottom: 10px;
+    font-weight: 600 !important;
+}

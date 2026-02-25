@@ -100,3 +100,26 @@ function hideSection() {
     document.getElementById('overlay').classList.remove('active');
     document.body.style.overflow = 'auto'; // Scroll enable
 }
+// Reviews ko fetch aur display karne ka function
+function displayReviews() {
+    const reviewsList = document.getElementById('reviewsList');
+    
+    // Database se "reviews" collection ko real-time read karna
+    db.collection("reviews").orderBy("timestamp", "desc").onSnapshot((querySnapshot) => {
+        reviewsList.innerHTML = ""; // Purani list clear karein
+        
+        querySnapshot.forEach((doc) => {
+            const data = doc.data();
+            const reviewHtml = `
+                <div class="wisdom-card" style="border-left: 5px solid #ff9933; margin-bottom: 10px; padding: 10px;">
+                    <p style="font-style: italic;">"${data.review}"</p>
+                    <small><strong>- ${data.name}</strong></small>
+                </div>
+            `;
+            reviewsList.innerHTML += reviewHtml;
+        });
+    });
+}
+
+// Page load hote hi function chalu karein
+displayReviews();

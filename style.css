@@ -31,17 +31,18 @@ header h1 { font-family: 'Yantra Manav', sans-serif; font-size: 2.2rem; margin-b
     align-items: center; 
 }
 .close-btn {
-    position: fixed; /* Absolute ki jagah Fixed karein */
+    position: fixed; /* Taaki ye screen par chipka rahe */
     top: 20px;
     right: 20px;
-    font-size: 50px; /* Thoda bada taaki mobile par dabe */
-    color: white;
+    font-size: 50px; 
+    color: white; 
+    background: none; 
+    border: none; 
     cursor: pointer;
-    z-index: 2000; /* Isse ye safed box ke hamesha upar rahega */
-    background: rgba(0,0,0,0.5); /* Button ke peeche halka sa color */
-    border-radius: 5px;
-    padding: 0 10px;
+    z-index: 9999 !important; /* Isse ye har cheez ke upar rahega */
+    padding: 10px;
 }
+
 
 
 

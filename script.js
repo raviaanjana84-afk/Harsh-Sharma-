@@ -266,21 +266,25 @@ function displayReviews() {
         querySnapshot.forEach((doc) => {
             count++;
             const data = doc.data();
+            
+            // ✨ Naya Code yahan aayega ✨
             const reviewHtml = `
-                <div class="wisdom-card" style="border-left: 5px solid #ff9933; margin-bottom: 15px; padding: 15px; ${count > 3 ? 'display: none;' : ''}">
-                    <p style="font-style: italic; color: #333;">"${data.review}"</p>
-                    <small style="color: #B22222;"><strong>- ${data.name}</strong></small>
+                <div class="wisdom-card" style="border-left: 5px solid #ff9933; margin-bottom: 15px; padding: 15px; text-align:left; ${count > 3 ? 'display: none;' : ''}">
+                    ${data.photo ? `<img src="${data.photo}" style="width:100%; max-height:250px; object-fit:cover; border-radius:10px; margin-bottom:10px;">` : ''}
+                    <p style="font-style: italic; color:#333;">"${data.review}"</p>
+                    <small style="color:#B22222;"><strong>- ${data.name}</strong></small>
                 </div>
             `;
             reviewsList.innerHTML += reviewHtml;
         });
 
-        // Agar 3 se zyada review hain toh button dikhayein
         if (count > 3) {
             viewMoreBtn.style.display = "block";
         }
     });
 }
+
+
 
 // Button click hone par baki reviews dikhane ke liye
 function toggleReviews() {

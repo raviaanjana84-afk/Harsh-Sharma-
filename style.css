@@ -1,24 +1,31 @@
-/* --- Root Variables --- */
+/* --- 1. Root Variables & Reset --- */
 :root { 
     --main-red: #B22222; 
     --gold: #FFD700; 
     --saffron: #FF8C00; 
     --bg: #FFF8F0; 
+    --white: #ffffff;
 }
 
-/* --- Global Styles --- */
+* {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent; /* Mobile click effect fix */
+}
+
 body { 
     font-family: 'Poppins', sans-serif; 
-     background: var(--bg); 
+    background: var(--bg); 
     margin: 0; 
     color: #333; 
-    overflow-x: hidden; 
+    line-height: 1.6;
 }
 
-/* --- Header Section --- */
+/* --- 2. Header --- */
 header { 
-    background: linear-gradient(rgba(178,34,34,0.9), rgba(178,34,34,0.9)), 
-                url('https://images.unsplash.com/photo-1544065603-997f742f36f6?auto=format&fit=crop&q=80'); 
+    background: linear-gradient(rgba(178,34,34,0.85), rgba(178,34,34,0.85)), 
+                url('https://images.unsplash.com/photo-1544065603-997f742f36f6?q=80'); 
+    background-size: cover;
+    background-position: center;
     padding: 50px 20px; 
     text-align: center; 
     color: white; 
@@ -28,163 +35,123 @@ header {
 header h1 { 
     font-family: 'Yantra Manav', sans-serif; 
     font-size: 2.2rem; 
-    margin-bottom: 5px; 
+    margin: 0; 
     color: var(--gold); 
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
 }
 
-/* --- Grid & Cards --- */
-.container { padding: 20px; max-width: 800px; margin: auto; }
+/* --- 3. Grid & Menu (Click Fix) --- */
+.container { 
+    padding: 20px; 
+    max-width: 800px; 
+    margin: auto; 
+    position: relative;
+}
 
 .menu-grid { 
     display: grid; 
     grid-template-columns: 1fr 1fr; 
     gap: 15px; 
-    margin-top: -30px; 
+    margin-top: -40px; 
     margin-bottom: 30px; 
+    position: relative;
+    z-index: 10; /* Ensure it stays above other layers */
 }
 
 .menu-item { 
-    background: white; 
-    padding: 25px; 
+    background: var(--white); 
+    padding: 25px 15px; 
     border-radius: 15px; 
     text-align: center; 
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1); 
-    cursor: pointer; 
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1); 
+    cursor: pointer !important; 
     border-bottom: 4px solid var(--saffron); 
-    transition: 0.3s; 
-    z-index: 10; /* Buttons clickable rahein */
-    position: relative;
+    transition: all 0.3s ease;
+    pointer-events: auto !important; /* Forces click to work */
 }
 
-.menu-item:active { transform: scale(0.95); }
-.menu-item i { font-size: 2.5rem; color: var(--main-red); margin-bottom: 10px; }
+.menu-item:active { transform: scale(0.95); box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+.menu-item i { font-size: 2.5rem; color: var(--main-red); margin-bottom: 10px; display: block; }
+.menu-item p { margin: 0; font-weight: 600; color: #444; }
 
+/* --- 4. Cards & Content --- */
 .wisdom-card { 
-    background: white; 
+    background: var(--white); 
     padding: 20px; 
     border-radius: 15px; 
     border-left: 5px solid var(--gold); 
     margin-bottom: 30px; 
-    text-align: center; 
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
 }
 
-/* --- Video --- */
 .video-container { 
     position: relative; 
     padding-bottom: 56.25%; 
     height: 0; 
     border-radius: 12px; 
     overflow: hidden; 
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1); 
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    margin-bottom: 30px;
 }
-.video-container iframe { position: absolute; top:0; left:0; width:100%; height:100%; }
+.video-container iframe { position: absolute; top:0; left:0; width:100%; height:100%; border:none; }
 
-/* --- Overlay System (Fixing Clickability) --- */
+/* --- 5. Overlay System (Fully Corrected) --- */
 .overlay { 
     position: fixed; 
     top: 0; 
     left: 0; 
     width: 100%; 
     height: 100%; 
-    background: rgba(0,0,0,0.92); 
-    z-index: 2000; /* Isse sabse upar rakhein */
-    display: none; /* JS will change to flex */
+    background: rgba(0,0,0,0.85); 
+    z-index: 9999; 
+    display: none; /* Controlled by JS and .active class */
     justify-content: center; 
     align-items: center; 
-    overflow-y: auto;
+    padding: 20px;
 }
 
-/* Jab overlay open ho tab is class ko JS se add karein */
-.overlay.active {
-    display: flex !important;
+.overlay.active { 
+    display: flex !important; 
 }
 
 #overlay-content {
-    background: #ffffff; 
-    padding: 25px; 
-    border-radius: 15px; 
-    width: 90%; 
+    background: var(--white); 
+    padding: 30px 20px; 
+    border-radius: 20px; 
+    width: 100%;
     max-width: 500px; 
+    max-height: 80vh;
+    overflow-y: auto;
     position: relative;
-    color: #1a1a1a !important; 
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    text-align: center;
 }
 
 .close-btn {
-    position: absolute; 
-    top: -50px; 
-    right: 0; 
-    font-size: 40px; 
-    color: white; 
-    background: none; 
-    border: none; 
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 30px;
+    color: #666;
+    background: #f0f0f0;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
     cursor: pointer;
-    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10001;
 }
 
-/* --- Booking & Buttons Design --- */
-.pujan-menu { display: flex; flex-direction: column; gap: 12px; margin-top: 15px; }
-
+/* --- 6. Inner Content Styles --- */
+.pujan-menu { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
 .pujan-card { 
-    background: #fffaf5; 
-    border-left: 6px solid #ff9933; 
+    background: #fff9f2; 
+    border-left: 5px solid var(--saffron); 
     padding: 15px; 
     border-radius: 10px; 
-    cursor: pointer; 
-    font-weight: bold; 
-    text-align: left;
-    transition: 0.3s;
-}
-
-.pujan-card:hover { background: #fff0e0; transform: translateX(5px); }
-
-.book-now-btn { 
-    background: #25D366; 
-    color: white; 
-    border: none; 
-    padding: 15px; 
-    width: 100%; 
-    border-radius: 8px; 
-    font-weight: bold; 
-    cursor: pointer; 
-    font-size: 16px; 
-    margin-top: 10px;
-}
-
-/* --- Floating Buttons --- */
-.float-box { position: fixed; bottom: 20px; right: 20px; display: flex; flex-direction: column; gap: 10px; z-index: 1000; }
-.btn-float { 
-    width: 60px; 
-    height: 60px; 
-    border-radius: 50%; 
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
-    font-size: 28px; 
-    color: white; 
-    text-decoration: none; 
-    box-shadow: 0 4px 10px rgba(0,0,0,0.3); 
-}
-.wa { background: #25D366; }
-.call { background: var(--main-red); }
-
-/* --- Reviews List Scroll Fix --- */
-#reviewsList {
-    max-height: 400px; 
-    overflow-y: auto;  
-    padding: 10px;
-    background: #fdfdfd;
-    border-radius: 10px;
-    border: 1px solid #eee;
-}
-
-/* --- Footer --- */
-footer { background: #1a1a1a; color: white; text-align: center; padding: 40px; }
-.social-links a { color: white; font-size: 2rem; margin: 0 15px; text-decoration: none; }
-
-/* --- Responsive Fixes --- */
-@media (max-width: 600px) {
-    .menu-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
-    .menu-item { padding: 15px; font-size: 14px; }
-    .close-btn { top: -45px; right: 0; font-size: 35px; }
-}
+    text-
+    

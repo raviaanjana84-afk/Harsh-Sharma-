@@ -282,22 +282,36 @@ function displayReviews() {
             const data = doc.data();
             
             // ✨ Naya Code yahan aayega ✨
+            
+            // ✨ यहाँ नया प्रीमियम कार्ड स्ट्रक्चर पेस्ट करें ✨
             const reviewHtml = `
-                <div class="wisdom-card" style="border-left: 5px solid #ff9933; margin-bottom: 15px; padding: 15px; text-align:left; ${count > 3 ? 'display: none;' : ''}">
-                    ${data.photo ? `<img src="${data.photo}" style="width:100%; max-height:250px; object-fit:cover; border-radius:10px; margin-bottom:10px;">` : ''}
-                    <p style="font-style: italic; color:#333;">"${data.review}"</p>
-                    <small style="color:#B22222;"><strong>- ${data.name}</strong></small>
+                <div class="wisdom-card" style="
+                    background: #fff;
+                    border-radius: 12px;
+                    padding: 0;
+                    margin-bottom: 25px;
+                    box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+                    border: 1px solid #f1f1f1;
+                    overflow: hidden;
+                    ${count > 3 ? 'display: none;' : ''}">
+                    
+                    ${data.photo ? `
+                        <img src="${data.photo}" style="width:100%; max-height:280px; object-fit:cover; display:block;">
+                    ` : ''}
+
+                    <div style="padding: 15px; text-align: left;">
+                        <p style="font-size: 1.05rem; color: #444; line-height: 1.6; margin-bottom: 12px;">
+                            "${data.review}"
+                        </p>
+                        <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #f8f8f8; padding-top: 10px;">
+                            <span style="color: #B22222; font-weight: bold; font-size: 0.9rem;">
+                               👤 ${data.name}
+                            </span>
+                            <span style="color: #FFD700; font-size: 0.8rem;">⭐⭐⭐⭐⭐</span>
+                        </div>
+                    </div>
                 </div>
             `;
-            reviewsList.innerHTML += reviewHtml;
-        });
-
-        if (count > 3) {
-            viewMoreBtn.style.display = "block";
-        }
-    });
-}
-
 
 
 // Button click hone par baki reviews dikhane ke liye

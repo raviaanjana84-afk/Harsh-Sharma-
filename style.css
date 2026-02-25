@@ -30,16 +30,19 @@ header h1 { font-family: 'Yantra Manav', sans-serif; font-size: 2.2rem; margin-b
     justify-content: center; 
     align-items: center; 
 }
-
-.close-btn { 
-    position: absolute; 
-    top: 15px;      /* Screen ke upar se thoda niche */
-    right: 15px;    /* Screen ke kinare se thoda andar */
-    font-size: 35px; 
-    color: white; 
-    cursor: pointer; 
-    z-index: 1001; 
+.close-btn {
+    position: fixed; /* Absolute ki jagah Fixed karein */
+    top: 20px;
+    right: 20px;
+    font-size: 50px; /* Thoda bada taaki mobile par dabe */
+    color: white;
+    cursor: pointer;
+    z-index: 2000; /* Isse ye safed box ke hamesha upar rahega */
+    background: rgba(0,0,0,0.5); /* Button ke peeche halka sa color */
+    border-radius: 5px;
+    padding: 0 10px;
 }
+
 
 
 /* Floating Buttons */

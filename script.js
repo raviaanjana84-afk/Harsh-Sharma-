@@ -215,48 +215,36 @@ window.onpopstate = function() {
 
 // 4. Review System
 
+// ✅ सही और साफ saveReview फंक्शन
 async function saveReview() {
-    const name = document.getElementById('userName').value.trim();
-    const review = document.getElementById('userReview').value.trim();
-    const photoFile = document.getElementById('userPhoto').files[0];
+    const nameInput = document.getElementById('userName');
+    const reviewInput = document.getElementById('userReview');
+    const photoInput = document.getElementById('userPhoto');
+    
+    const name = nameInput.value.trim();
+    const review = reviewInput.value.trim();
+    const photoFile = photoInput.files[0];
     let photoUrl = "";
 
     if (name && review) {
         try {
-            // ImgBB par photo upload ho rahi hai
+            // 1. ImgBB पर फोटो अपलोड
             if (photoFile) {
                 const formData = new FormData();
                 formData.append("image", photoFile);
                 
-                // Aapki API Key yahan set kar di hai
                 const response = await fetch("https://api.imgbb.com/1/upload?key=2705a30bb29595bfa91f1dc8fa478ef4", {
                     method: "POST",
                     body: formData
                 });
                 const result = await response.json();
-                photoUrl = result.data.url; // Photo ka link mil gaya!
+                
+                if (result.success) {
+                    photoUrl = result.data.url;
+                }
             }
 
-            // Text aur Photo Link Firestore mein save ho raha hai
-            await db.collection("reviews").add({
-                name: name,
-                review: review,
-                photo: photoUrl,
-                timestamp: firebase.firestore.FieldValue.serverTimestamp()
-            });
-
-            alert("🙏 अनुभव फोटो के साथ साझा किया गया!");
-            location.reload(); 
-        } catch (error) {
-            console.error("Error:", error);
-            alert("Photo upload nahi ho payi, koshish karte rahein.");
-        }
-    } else {
-        alert("कृपया नाम और अनुभव भरें।");
-    }
-}
-
-            // 2. Phir Firestore mein data save karein
+            // 2. Firestore में डेटा सेव करना
             await db.collection("reviews").add({
                 name: name,
                 review: review,
@@ -265,18 +253,21 @@ async function saveReview() {
             });
 
             alert("🙏 आपका अनुभव फोटो के साथ साझा किया गया!");
+            
+            // फॉर्म को खाली करना
             nameInput.value = '';
             reviewInput.value = '';
             photoInput.value = '';
+            location.reload(); 
+
         } catch (error) {
             console.error("Error:", error);
-            alert("Kuch galti hui, kripya fir koshish karein.");
+            alert("कुछ गलती हुई, कृपया फिर कोशिश करें।");
         }
     } else {
         alert("कृपया नाम और अनुभव दोनों भरें।");
     }
 }
-
 
 function displayReviews() {
     const reviewsList = document.getElementById('reviewsList');

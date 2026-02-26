@@ -1,122 +1,135 @@
-body{
-margin:0;
-font-family:'Poppins',sans-serif;
-background:#FFF8F0;
-color:#333;
+:root { 
+    --main-red: #B22222; 
+    --gold: #FFD700; 
+    --saffron: #FF8C00; 
+    --bg: #FFF8F0; 
 }
 
-.hero{
-background:linear-gradient(rgba(178,34,34,0.9),rgba(178,34,34,0.9)),
-url('https://images.unsplash.com/photo-1544065603-997f742f36f6?auto=format&fit=crop&q=80');
-background-size:cover;
-color:white;
-text-align:center;
-padding:50px 20px;
+body { 
+    font-family: 'Poppins', sans-serif; 
+    background: var(--bg); 
+    margin: 0; 
+    color: #333; 
+    line-height: 1.6;
 }
 
-.hero h1{
-font-family:'Yantra Manav',sans-serif;
-color:#FFD700;
-margin:0;
+/* Header */
+header { 
+    background: linear-gradient(rgba(178,34,34,0.9), rgba(178,34,34,0.9)), 
+                url('https://images.unsplash.com/photo-1544065603-997f742f36f6?auto=format&fit=crop&q=80'); 
+    padding: 40px 20px; 
+    text-align: center; 
+    color: white; 
+    border-bottom: 5px solid var(--gold); 
 }
 
-.subline{
-font-size:14px;
-margin-top:10px;
-opacity:0.9;
+header h1 { font-family: 'Yantra Manav', sans-serif; color: var(--gold); margin: 0; }
+
+.header-quote {
+    padding-top: 15px;
+    border-top: 1px solid rgba(255,215,0,0.3);
+    max-width: 400px;
+    margin: 15px auto 0;
+    font-style: italic;
+    color: var(--gold);
 }
 
-.menu-grid{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:15px;
-padding:20px;
+.container { padding: 20px; max-width: 800px; margin: auto; }
+
+/* Grid Menu */
+.menu-grid { 
+    display: grid; 
+    grid-template-columns: 1fr 1fr; 
+    gap: 15px; 
+    margin-top: -30px; 
+    margin-bottom: 30px; 
 }
 
-.menu-card{
-background:white;
-padding:25px;
-text-align:center;
-border-radius:15px;
-box-shadow:0 4px 12px rgba(0,0,0,0.1);
-cursor:pointer;
-transition:0.3s;
+.menu-item { 
+    background: white; 
+    padding: 20px; 
+    border-radius: 15px; 
+    text-align: center; 
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1); 
+    cursor: pointer; 
+    border-bottom: 4px solid var(--saffron); 
+    transition: 0.3s; 
 }
 
-.menu-card:hover{
-transform:scale(1.05);
+.menu-item i { font-size: 2rem; color: var(--main-red); margin-bottom: 10px; }
+
+/* Cards & Forms */
+.wisdom-card { 
+    background: white; 
+    padding: 20px; 
+    border-radius: 15px; 
+    border-left: 5px solid var(--gold); 
+    margin-bottom: 25px; 
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
 }
 
-.overlay{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:rgba(0,0,0,0.8);
-display:none;
-justify-content:center;
-align-items:center;
+.wisdom-card input, .wisdom-card textarea {
+    width: 100%; padding: 12px; margin-bottom: 10px;
+    border-radius: 8px; border: 1px solid #ddd; box-sizing: border-box;
 }
 
-.overlay-content{
-background:white;
-width:90%;
-max-width:450px;
-padding:25px;
-border-radius:20px;
-max-height:80vh;
-overflow:auto;
-animation:fadeIn 0.3s;
+.wisdom-card button {
+    background: var(--saffron); color: white; width: 100%; 
+    padding: 12px; border: none; border-radius: 8px; 
+    font-weight: bold; cursor: pointer;
 }
 
-@keyframes fadeIn{
-from{opacity:0;transform:scale(0.9);}
-to{opacity:1;transform:scale(1);}
+/* Overlays */
+.overlay { 
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+    background: rgba(0,0,0,0.85); z-index: 1000; display: none; 
+    justify-content: center; align-items: center; padding: 20px;
 }
 
-.close-btn{
-position:absolute;
-top:15px;
-right:20px;
-background:none;
-border:none;
-font-size:30px;
-cursor:pointer;
+.overlay-inner { 
+    background: white; padding: 25px; border-radius: 20px; 
+    max-width: 500px; width: 100%; max-height: 85vh; overflow-y: auto; 
+    position: relative; text-align: center;
 }
 
-.reviews-section{
-padding:20px;
+.close-btn { 
+    position: absolute; top: 10px; right: 15px; 
+    font-size: 35px; color: #333; background: none; border: none; cursor: pointer; 
 }
 
-.review-item{
-background:white;
-padding:15px;
-margin-bottom:10px;
-border-radius:12px;
-box-shadow:0 2px 6px rgba(0,0,0,0.1);
+/* Pujan Cards inside Overlay */
+.pujan-menu { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
+.pujan-card { 
+    background: #FFF8F0; padding: 15px; border-radius: 10px; 
+    border-left: 5px solid var(--saffron); font-weight: bold; cursor: pointer; 
+    text-align: left; transition: 0.2s;
+}
+.pujan-card:hover { background: #FFE4C4; }
+
+.price-box { 
+    margin: 15px 0; padding: 10px; background: #fdf2f2; 
+    border: 1px dashed var(--main-red); border-radius: 8px; color: var(--main-red);
 }
 
-.float-wa{
-position:fixed;
-bottom:20px;
-right:20px;
-background:#25D366;
-width:60px;
-height:60px;
-border-radius:50%;
-display:flex;
-align-items:center;
-justify-content:center;
-color:white;
-font-size:28px;
-box-shadow:0 4px 12px rgba(0,0,0,0.3);
-cursor:pointer;
+.book-now-btn {
+    background: #25D366; color: white; border: none; padding: 15px;
+    width: 100%; border-radius: 10px; font-weight: bold; margin-bottom: 10px;
 }
 
-footer{
-background:#111;
-color:white;
-text-align:center;
-padding:20px;
+/* Floating Buttons */
+.float-box { position: fixed; bottom: 20px; right: 20px; display: flex; flex-direction: column; gap: 10px; }
+.btn-float { 
+    width: 55px; height: 55px; border-radius: 50%; 
+    display: flex; align-items: center; justify-content: center; 
+    color: white; font-size: 24px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); 
+}
+.wa { background: #25D366; }
+.call { background: var(--main-red); }
+
+footer { background: #1a1a1a; color: white; text-align: center; padding: 30px; margin-top: 40px; }
+.social-links a { color: white; font-size: 1.8rem; margin: 0 10px; }
+
+@media (max-width: 600px) {
+    .menu-grid { grid-template-columns: 1fr 1fr; }
+    header h1 { font-size: 1.8rem; }
 }

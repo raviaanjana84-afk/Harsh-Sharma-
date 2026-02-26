@@ -4,98 +4,97 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>पंडित हर्ष शर्मा | उज्जैन आध्यात्मिक सेवाएँ</title>
-    
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Yantra+Manav:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 
     <style>
-        :root { --red: #B22222; --gold: #FFD700; --saffron: #FF8C00; --bg: #FFF8F0; }
-        
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        :root { --main-red: #B22222; --gold: #FFD700; --saffron: #FF8C00; --bg: #FFF8F0; }
         body { font-family: 'Poppins', sans-serif; background: var(--bg); margin: 0; color: #333; overflow-x: hidden; }
 
         header { 
-            background: linear-gradient(rgba(178,34,34,0.8), rgba(178,34,34,0.8)), url('https://images.unsplash.com/photo-1544065603-997f742f36f6?q=80');
-            background-size: cover; padding: 50px 20px; text-align: center; color: white; border-bottom: 5px solid var(--gold);
+            background: linear-gradient(rgba(178,34,34,0.9), rgba(178,34,34,0.9)), url('https://images.unsplash.com/photo-1544065603-997f742f36f6?auto=format&fit=crop&q=80'); 
+            padding: 60px 20px; text-align: center; color: white; border-bottom: 5px solid var(--gold); 
         }
+        header h1 { font-family: 'Yantra Manav', sans-serif; font-size: 2.5rem; margin: 0; color: var(--gold); }
 
         .container { padding: 20px; max-width: 800px; margin: auto; position: relative; }
 
-        /* Menu Grid Fix */
+        /* Grid */
         .menu-grid { 
             display: grid; grid-template-columns: 1fr 1fr; gap: 15px; 
-            margin-top: -40px; margin-bottom: 30px; position: relative; z-index: 100; 
+            margin-top: -40px; margin-bottom: 30px; position: relative; z-index: 500; 
         }
-
         .menu-item { 
-            background: white; padding: 25px 15px; border-radius: 15px; text-align: center; 
-            box-shadow: 0 8px 20px rgba(0,0,0,0.1); cursor: pointer; border-bottom: 4px solid var(--saffron);
-            transition: 0.3s; position: relative; z-index: 101; pointer-events: auto;
+            background: white; padding: 25px; border-radius: 15px; text-align: center; 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1); cursor: pointer; border-bottom: 4px solid var(--saffron); 
+            transition: 0.3s; pointer-events: auto !important;
         }
         .menu-item:active { transform: scale(0.95); }
-        .menu-item i { font-size: 2.2rem; color: var(--red); margin-bottom: 10px; display: block; }
-        .menu-item p { margin: 0; font-weight: 600; }
+        .menu-item i { font-size: 2.5rem; color: var(--main-red); margin-bottom: 10px; display: block; }
 
-        /* Review Section */
-        .wisdom-card { background: white; padding: 20px; border-radius: 15px; margin-bottom: 25px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); text-align: center; }
+        /* Review Card */
+        .wisdom-card { background: white; padding: 20px; border-radius: 15px; border-left: 5px solid var(--gold); margin-bottom: 30px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
         input, textarea { width: 100%; padding: 12px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 8px; font-family: inherit; }
-        
-        .share-btn { background: var(--saffron); color: white; border: none; padding: 12px 25px; border-radius: 8px; font-weight: bold; cursor: pointer; width: 100%; }
+        .btn-action { background: var(--saffron); color: white; border: none; padding: 12px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; width: 100%; }
 
-        /* Overlay Fix */
+        /* Overlay */
         .overlay { 
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
             background: rgba(0,0,0,0.9); z-index: 2000; display: none; 
-            justify-content: center; align-items: center; padding: 20px;
+            justify-content: center; align-items: center; padding: 15px;
         }
         #overlay-content { 
-            background: white; padding: 25px; border-radius: 20px; width: 100%; max-width: 500px; 
-            position: relative; max-height: 85vh; overflow-y: auto; 
+            background: white; padding: 25px; border-radius: 15px; width: 100%; max-width: 500px; 
+            max-height: 85vh; overflow-y: auto; position: relative; text-align: left;
         }
-        .close-btn { position: absolute; top: 10px; right: 15px; font-size: 30px; cursor: pointer; border: none; background: none; }
+        .close-btn { position: absolute; top: 10px; right: 15px; font-size: 30px; cursor: pointer; border: none; background: #eee; border-radius: 50%; width: 40px; height: 40px; }
+
+        /* Pujan Styles Inside Overlay */
+        .pujan-menu { display: flex; flex-direction: column; gap: 10px; margin-top: 15px; }
+        .pujan-card { background: #fffaf5; border-left: 5px solid var(--saffron); padding: 15px; border-radius: 8px; cursor: pointer; font-weight: bold; }
+        .price-box { background: #fff5f5; padding: 10px; border-radius: 5px; color: var(--main-red); font-weight: bold; margin: 10px 0; border: 1px dashed var(--main-red); text-align: center; }
 
         /* Floating Buttons */
-        .float-box { position: fixed; bottom: 20px; right: 20px; display: flex; flex-direction: column; gap: 12px; z-index: 1500; }
-        .btn-float { width: 55px; height: 55px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; color: white; text-decoration: none; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
-        .wa { background: #25D366; } .call { background: var(--red); }
+        .float-box { position: fixed; bottom: 20px; right: 20px; display: flex; flex-direction: column; gap: 10px; z-index: 1500; }
+        .btn-float { width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 28px; color: white; box-shadow: 0 4px 10px rgba(0,0,0,0.3); text-decoration: none; }
+        .wa { background: #25D366; } .call { background: var(--main-red); }
 
-        /* Review Display */
-        .review-box { border-bottom: 1px solid #eee; padding: 15px 0; text-align: left; }
-        .review-box img { width: 100%; border-radius: 10px; margin-top: 10px; }
+        .review-post { border-bottom: 1px solid #eee; padding-bottom: 15px; margin-bottom: 15px; text-align: left; }
+        .review-post img { width: 100%; border-radius: 10px; margin-top: 10px; border: 1px solid #ddd; }
     </style>
 </head>
 <body>
 
 <header>
     <h1>पंडित हर्ष शर्मा (उज्जैन)</h1>
-    <p>श्रीमद भगवत गीता प्रचारक</p>
+    <p>पधारें महाकाल की नगरी उज्जैन | श्रीमद भगवत गीता प्रचारक</p>
 </header>
 
 <div class="container">
     <div class="menu-grid">
-        <div class="menu-item" onclick="showSection('pujan')"><i class="fas fa-om"></i><p>पूजन</p></div>
-        <div class="menu-item" onclick="showSection('hawan')"><i class="fas fa-fire"></i><p>हवन</p></div>
-        <div class="menu-item" onclick="showSection('kundli')"><i class="fas fa-scroll"></i><p>कुंडली</p></div>
-        <div class="menu-item" onclick="showSection('mantra')"><i class="fas fa-hands-praying"></i><p>मंत्र</p></div>
+        <div class="menu-item" onclick="showSection('pujan')"><i class="fas fa-om"></i><p>पूजन विभाग</p></div>
+        <div class="menu-item" onclick="showSection('hawan')"><i class="fas fa-fire"></i><p>हवन विभाग</p></div>
+        <div class="menu-item" onclick="showSection('kundli')"><i class="fas fa-scroll"></i><p>कुंडली विभाग</p></div>
+        <div class="menu-item" onclick="showSection('mantra')"><i class="fas fa-hands-praying"></i><p>मंत्र विभाग</p></div>
     </div>
 
     <div class="wisdom-card">
         <h3>🙏 अपना अनुभव साझा करें</h3>
         <input type="text" id="userName" placeholder="आपका नाम">
-        <textarea id="userReview" placeholder="आपका अनुभव..."></textarea>
-        <p style="text-align: left; font-size: 13px;">📸 फोटो चुनें:</p>
-        <input type="file" id="userPhoto" accept="image/*">
-        <button class="share-btn" onclick="saveReview()">✨ अनुभव साझा करें</button>
+        <textarea id="userReview" placeholder="अपना अनुभव लिखें..." rows="3"></textarea>
+        <p style="text-align:left; font-size:14px; margin:5px 0;">📸 फोटो जोड़ें:</p>
+        <input type="file" id="userPhoto" accept="image/*" style="border:none;">
+        <button class="btn-action" onclick="saveReview()">✨ अनुभव साझा करें ✨</button>
     </div>
 
     <div id="reviewsList">
-        </div>
+        <div class="wisdom-card"><h3>💬 भक्तों के अनुभव</h3><p>लोड हो रहा है...</p></div>
+    </div>
 </div>
 
-<div id="overlay" class="overlay" onclick="if(event.target == this) hideSection()">
+<div id="overlay" class="overlay" onclick="if(event.target==this) hideSection()">
     <div id="overlay-content">
         <button class="close-btn" onclick="hideSection()">&times;</button>
         <div id="overlay-body"></div>
@@ -108,7 +107,7 @@
 </div>
 
 <script>
-    // 1. Firebase Config
+    // 1. Config
     const firebaseConfig = {
         apiKey: "AIzaSyDO8kxU1t9zcfD0MXf6vhLlE3FR_CUKycE",
         authDomain: "harsh-sharma-website-f01ac.firebaseapp.com",
@@ -120,67 +119,35 @@
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
 
-    // 2. Data
+    // 2. Spiritual Data (All Back!)
     const spiritualData = {
-        'pujan': '<h2>🕉️ पूजन विभाग</h2><p>मंगल दोष, कालसर्प शांति एवं समस्त दोष निवारण पूजन।</p><button class="share-btn" onclick="window.open(\'https://wa.me/918319714682\')">बुकिंग करें</button>',
-        'hawan': '<h2>🔥 हवन विभाग</h2><p>माँ बगलामुखी एवं नवग्रह शांति विशेष हवन।</p>',
-        'kundli': '<h2>📜 कुंडली विश्लेषण</h2><p>सटीक जन्म पत्रिका निर्माण एवं परामर्श।</p>',
-        'mantra': '<h2>🕉️ मंत्र जाप</h2><p>विशेष अनुष्ठान एवं मंत्र सिद्धि जाप।</p>'
+        'pujan': `
+            <h2 style="color:var(--main-red); text-align:center;">🕉️ मुख्य पूजन विभाग</h2>
+            <div class="pujan-menu">
+                <div class="pujan-card" onclick="showSection('mangal')">🚩 मंगल दोष (भात पूजन)</div>
+                <div class="pujan-card" onclick="showSection('kaalsarp')">🐍 कालसर्प दोष निवारण</div>
+                <div class="pujan-card" onclick="showSection('navgrah')">✨ नवग्रह शांति</div>
+            </div>`,
+        'mangal': `
+            <h2>🚩 मंगल दोष निवारण</h2>
+            <p>मंगल भात पूजन विशेष रूप से उज्जैन में मंगलनाथ मंदिर पर किया जाता है।</p>
+            <div class="price-box">💰 शुल्क: ₹1350 - ₹5100</div>
+            <button class="btn-action" style="background:#25D366" onclick="window.open('https://wa.me/918319714682?text=मंगल पूजन बुकिंग')">📅 बुकिंग करें</button>
+            <button class="btn-action" style="margin-top:10px; background:#666" onclick="showSection('pujan')">← वापस</button>`,
+        'kaalsarp': `
+            <h2>🐍 कालसर्प दोष निवारण</h2>
+            <p>कालसर्प दोष शांति के लिए चांदी के नाग-नागिन पूजन।</p>
+            <div class="price-box">💰 शुल्क: ₹2100 - ₹5100</div>
+            <button class="btn-action" style="background:#25D366" onclick="window.open('https://wa.me/918319714682?text=कालसर्प पूजन बुकिंग')">📅 बुकिंग करें</button>
+            <button class="btn-action" style="margin-top:10px; background:#666" onclick="showSection('pujan')">← वापस</button>`,
+        'hawan': '<h2>🔥 हवन विभाग</h2><p>माँ बगलामुखी एवं विशेष नवग्रह हवन अनुष्ठान।</p>',
+        'kundli': '<h2>📜 कुंडली विभाग</h2><p>सटीक कुंडली निर्माण एवं दोष विश्लेषण।</p>',
+        'mantra': '<h2>🕉️ मंत्र विभाग</h2><p>विभिन्न बाधाओं हेतु मंत्र जाप एवं अनुष्ठान।</p>'
     };
 
     // 3. Functions
     function showSection(key) {
         document.getElementById('overlay-body').innerHTML = spiritualData[key];
         document.getElementById('overlay').style.display = 'flex';
-    }
-
-    function hideSection() {
-        document.getElementById('overlay').style.display = 'none';
-    }
-
-    async function saveReview() {
-        const name = document.getElementById('userName').value;
-        const review = document.getElementById('userReview').value;
-        const photoFile = document.getElementById('userPhoto').files[0];
-        let photoUrl = "";
-
-        if(!name || !review) return alert("कृपया नाम और अनुभव भरें");
-
-        try {
-            if(photoFile) {
-                const formData = new FormData();
-                formData.append("image", photoFile);
-                const res = await fetch("https://api.imgbb.com/1/upload?key=2705a30bb29595bfa91f1dc8fa478ef4", {
-                    method: "POST", body: formData
-                });
-                const resData = await res.json();
-                photoUrl = resData.data.url;
-            }
-
-            await db.collection("reviews").add({
-                name: name, review: review, photo: photoUrl, timestamp: firebase.firestore.FieldValue.serverTimestamp()
-            });
-            alert("धन्यवाद!"); location.reload();
-        } catch(e) { alert("Error!"); }
-    }
-
-    function loadReviews() {
-        db.collection("reviews").orderBy("timestamp", "desc").onSnapshot(snap => {
-            const list = document.getElementById('reviewsList');
-            list.innerHTML = "<h3>💬 भक्तों के अनुभव</h3>";
-            snap.forEach(doc => {
-                const data = doc.data();
-                list.innerHTML += `
-                    <div class="wisdom-card review-box">
-                        <p><b>${data.name}</b></p>
-                        <p>"${data.review}"</p>
-                        ${data.photo ? `<img src="${data.photo}">` : ''}
-                    </div>`;
-            });
-        });
-    }
-    window.onload = loadReviews;
-</script>
-
-</body>
-</html>
+        document.body.
+    

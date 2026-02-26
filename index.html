@@ -1,155 +1,114 @@
+
 <!DOCTYPE html>
 <html lang="hi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>पंडित हर्ष शर्मा | उज्जैन</title>
-    
-    <style>
-        :root { --red: #B22222; --gold: #FFD700; --bg: #FFF8F0; }
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        
-        body { font-family: sans-serif; background: var(--bg); margin: 0; padding: 0; }
-
-        header { background: var(--red); color: white; text-align: center; padding: 40px 20px; border-bottom: 5px solid var(--gold); }
-
-        .container { padding: 20px; max-width: 600px; margin: auto; }
-
-        /* CLICK FIX: Pointer events auto ensures buttons are clickable */
-        .menu-grid { 
-            display: grid; grid-template-columns: 1fr 1fr; gap: 15px; 
-            margin-top: -30px; position: relative; z-index: 999;
-        }
-
-        .menu-item { 
-            background: white; padding: 20px; border-radius: 12px; text-align: center;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1); cursor: pointer !important;
-            border-bottom: 4px solid orange; pointer-events: auto !important;
-        }
-
-        /* Overlay System (Isse click nahi rukega) */
-        .overlay { 
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-            background: rgba(0,0,0,0.85); z-index: 2000; 
-            display: none; justify-content: center; align-items: center; 
-        }
-
-        #overlay-content { 
-            background: white; padding: 20px; border-radius: 15px; width: 90%; 
-            max-width: 400px; position: relative; text-align: center;
-        }
-
-        .close-btn { position: absolute; top: -40px; right: 0; color: white; font-size: 30px; cursor: pointer; background: none; border: none; }
-
-        .btn-wa { background: #25D366; color: white; padding: 12px; border: none; border-radius: 8px; width: 100%; font-weight: bold; cursor: pointer; margin-top: 10px; }
-
-        /* Review Design */
-        .wisdom-card { background: white; padding: 15px; border-radius: 12px; margin-bottom: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        input, textarea { width: 100%; padding: 10px; margin: 5px 0; border: 1px solid #ddd; border-radius: 5px; }
-        
-        .float-box { position: fixed; bottom: 20px; right: 20px; z-index: 3000; }
-        .btn-float { width: 60px; height: 60px; background: #25D366; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; text-decoration: none; font-size: 30px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
-    </style>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>पंडित हर्ष शर्मा | उज्जैन आध्यात्मिक सेवाएँ</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Yantra+Manav:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
 </head>
 <body>
 
-<header>
-    <h1 style="margin:0;">पंडित हर्ष शर्मा</h1>
-    <p style="margin:5px 0;">उज्जैन आध्यात्मिक सेवाएँ</p>
+    <header style="padding: 30px 20px; text-align: center; background: #B22222; color: white;">
+    <h1 style="font-size: 2.2rem; margin-bottom: 5px; color: #FFD700; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">
+        पंडित हर्ष शर्मा (उज्जैन)
+    </h1>
+    <p style="font-size: 1.1rem; opacity: 0.9; margin-bottom: 15px;">
+        पधारें महाकाल की नगरी उज्जैन | श्रीमद भगवत गीता प्रचारक
+    </p>
+
+    <div style="padding-top: 15px; border-top: 1px solid rgba(255,215,0,0.3); max-width: 400px; margin: 0 auto;">
+        <p style="color: #FFD700; font-size: 1rem; font-weight: bold; line-height: 1.6; font-style: italic; margin: 0;">
+            ॐ धरणीगर्भसंभूतं विद्युत्कांतिसमप्रभम्।<br>
+            कुमारं शक्तिहस्तं तं मंगलं प्रणमाम्यहम॥
+        </p>
+    </div>
 </header>
 
-<div class="container">
+
+
     <div class="menu-grid">
-        <div class="menu-item" onclick="show('pujan')">🕉️<br>पूजन</div>
-        <div class="menu-item" onclick="show('hawan')">🔥<br>हवन</div>
-        <div class="menu-item" onclick="show('kundli')">📜<br>कुंडली</div>
-        <div class="menu-item" onclick="show('mantra')">🙏<br>मंत्र</div>
+        <div class="menu-item" onclick="showSection('pujan')"><i class="fas fa-om"></i><p>पूजन विभाग</p></div>
+        <div class="menu-item" onclick="showSection('hawan')"><i class="fas fa-fire"></i><p>हवन विभाग</p></div>
+        <div class="menu-item" onclick="showSection('kundli')"><i class="fas fa-scroll"></i><p>कुंडली विभाग</p></div>
+        <div class="menu-item" onclick="showSection('mantra')"><i class="fas fa-hands-praying"></i><p>मंत्र विभाग</p></div>
+<div class="wisdom-card">
+    <h3 style="text-align: center;">🙏 अपना अनुभव साझा करें</h3>
+    <input type="text" id="userName" placeholder="आपका नाम" style="width:95%; padding:10px; margin-bottom:10px; border-radius:5px; border:1px solid #ddd;">
+    <textarea id="userReview" placeholder="अपना अनुभव लिखें..." style="width:95%; padding:10px; height:80px; margin-bottom:10px; border-radius:5px; border:1px solid #ddd;"></textarea>
+    
+    <p style="font-size: 14px; margin-bottom: 5px; color: #666; text-align: left;">📸 फोटो जोड़ें (Optional):</p>
+    <input type="file" id="userPhoto" accept="image/*" style="margin-bottom:15px; width: 100%;">
+
+    <button onclick="saveReview()" style="background:#ff9933; color:white; width:100%; padding:12px; border:none; border-radius:8px; font-weight:bold; cursor:pointer;">
+        ✨ अनुभव साझा करें ✨
+    </button>
+</div>
+        
+
+    <div class="wisdom-card">
+        <h3>✨ आज का कल्याणकारी विचार</h3>
+        <p id="daily-quote">"कर्मण्येवाधिकारस्ते मा फलेषु कदाचन।" - श्रीमद भगवत गीता</p>
     </div>
 
-    <div class="wisdom-card" style="margin-top:30px;">
-        <h3>✍️ अनुभव साझा करें</h3>
-        <input type="text" id="name" placeholder="नाम">
-        <textarea id="msg" placeholder="आपका अनुभव..."></textarea>
-        <input type="file" id="pic" accept="image/*">
-        <button class="btn-wa" style="background: orange;" onclick="post()">Share Review</button>
+    <div class="featured-video">
+        <h3>📺 विशेष प्रवचन एवं दर्शन</h3>
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed?listType=user_uploads&list=PanditHarshSharmaUjjain" frameborder="0" allowfullscreen></iframe>
+        </div>
+<div id="reviewsContainer">
+    <div id="reviewsList">
+        </div>
+    <button id="viewMoreBtn" onclick="toggleReviews()" style="width: 100%; padding: 10px; background: none; border: 1px solid #FF9933; color: #FF9933; margin-top: 10px; border-radius: 5px; font-weight: bold; display: none;">
+        और भी अनुभव देखें 👇
+    </button>
+</div>
+        
+<div class="featured-video">
+    <h3>📸 पावन दर्शन (Gallery)</h3>
+    <div class="gallery-grid">
+        <img src="https://images.unsplash.com/photo-1544065603-997f742f36f6?q=80&w=400" alt="Pujan 1">
+        <img src="https://images.unsplash.com/photo-1604543163833-3b60f124430e?q=80&w=400" alt="Pujan 2">
     </div>
-
-    <div id="re-list"></div>
+</div>
+        
+    </div>
 </div>
 
-<div id="ov" class="overlay">
-    <div id="overlay-content">
-        <button class="close-btn" onclick="hide()">&times;</button>
-        <div id="ov-body"></div>
-    </div>
+<div id="overlay" class="overlay">
+    <button class="close-btn" onclick="hideSection()">&times;</button>
+    
+    <div id="overlay-content" class="overlay-inner"></div>
 </div>
 
 <div class="float-box">
-    <a href="https://wa.me/918319714682" class="btn-float">💬</a>
+    <a href="https://api.whatsapp.com/send?phone=918319714682&text=Jai%20Shree%20Krishna" class="btn-float wa" target="_blank"><i class="fab fa-whatsapp"></i></a>
+    <a href="tel:+918319714682" class="btn-float call"><i class="fas fa-phone"></i></a>
 </div>
 
-<script>
-    const firebaseConfig = {
-        apiKey: "AIzaSyDO8kxU1t9zcfD0MXf6vhLlE3FR_CUKycE",
-        authDomain: "harsh-sharma-website-f01ac.firebaseapp.com",
-        projectId: "harsh-sharma-website-f01ac",
-        storageBucket: "harsh-sharma-website-f01ac.firebasestorage.app",
-        messagingSenderId: "8698683996",
-        appId: "1:8698683996:web:58cd2b05fcf71646e0bc99"
-    };
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore();
+<footer>
+    <div class="social-links">
+        <a href="https://www.youtube.com/@PanditHarshSharmaUjjain" target="_blank"><i class="fab fa-youtube"></i></a>
+<div style="text-align: center; padding: 20px 0;">
+    <a href="https://www.instagram.com/harshu.0005?igsh=NmVvanFqZzBremFn" target="_blank" style="color: white; font-size: 28px; margin: 0 15px; text-decoration: none;">
+        <i class="fab fa-instagram"></i>
+    </a>
 
-    const data = {
-        'pujan': '<h2>पूजन विभाग</h2><p>मंगल दोष, कालसर्प एवं नवग्रह शांति।</p><button class="btn-wa" onclick="location.href=\'https://wa.me/918319714682\'">WhatsApp Booking</button>',
-        'hawan': '<h2>हवन विभाग</h2><p>माँ बगलामुखी विशेष हवन पूजन।</p>',
-        'kundli': '<h2>कुंडली विभाग</h2><p>सटीक कुंडली विश्लेषण एवं परामर्श।</p>',
-        'mantra': '<h2>मंत्र विभाग</h2><p>विशेष मंत्र जाप एवं अनुष्ठान।</p>'
-    };
+    <a href="https://www.facebook.com/share/1C2H6wSqTN/" target="_blank" style="color: white; font-size: 28px; margin: 0 15px; text-decoration: none;">
+        <i class="fab fa-facebook"></i>
+    </a>
+</div>
+        
 
-    function show(id) {
-        document.getElementById('ov-body').innerHTML = data[id];
-        document.getElementById('ov').style.display = 'flex';
-    }
+    </div>
+    <p style="margin-top:15px;">Designed with ❤️ by Ravi Anjana</p>
+</footer>
 
-    function hide() {
-        document.getElementById('ov').style.display = 'none';
-    }
-
-    async function post() {
-        const n = document.getElementById('name').value;
-        const m = document.getElementById('msg').value;
-        const f = document.getElementById('pic').files[0];
-        let url = "";
-
-        if(!n || !m) return alert("Please fill info");
-
-        try {
-            if(f) {
-                const fd = new FormData(); fd.append("image", f);
-                const r = await fetch("https://api.imgbb.com/1/upload?key=2705a30bb29595bfa91f1dc8fa478ef4", {method:"POST", body:fd});
-                const j = await r.json(); url = j.data.url;
-            }
-            await db.collection("reviews").add({name:n, text:m, pic:url, time: Date.now()});
-            alert("Done!"); location.reload();
-        } catch(e) { alert("Error!"); }
-    }
-
-    function load() {
-        db.collection("reviews").orderBy("time", "desc").onSnapshot(s => {
-            let h = "<h3>💬 Reviews</h3>";
-            s.forEach(d => {
-                const v = d.data();
-                h += `<div class="wisdom-card"><b>${v.name}</b><p>${v.text}</p>${v.pic ? `<img src="${v.pic}" style="width:100%; border-radius:8px;">` : ''}</div>`;
-            });
-            document.getElementById('re-list').innerHTML = h;
-        });
-    }
-    window.onload = load;
-</script>
-
+<script src="script.js"></script>
 </body>
 </html>

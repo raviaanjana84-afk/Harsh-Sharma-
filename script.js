@@ -215,12 +215,107 @@ window.onpopstate = function() {
 
 // 4. Review System
 
-// ✅ सही और साफ saveReview फंक्शन
 async function saveReview() {
-    const nameInput = document.getElementById('userName');
-    const reviewInput = document.getElementById('userReview');
-    const photoInput = document.getElementById('userPhoto');
+    const name = document.getElementById('userName').value.trim();
+    const review = document.getElementById('userReview').value.trim();
+    const photoFile = document.getElementById('userPhoto').files[0];
+    let photoUrl = "";
+
+    if (name && review) {
+        try {
+            // ImgBB par photo upload ho rahi hai
+            if (photoFile) {
+                const formData = new FormData();
+                formData.append("image", photoFile);
+                
+                // Aapki API Key yahan set kar di hai
+                const response = await fetch("https://api.imgbb.com/1/upload?key=2705a30bb29595bfa91f1dc8fa478ef4", {
+                    method: "POST",
+                    body: formData
+                });
+                const result = await response.json();
+                photoUrl = result.data.url; // Photo ka link mil gaya!
+            }
+
+            // Text aur Photo Link Firestore mein save ho raha hai
+            await db.collection("reviews").add({
+                name: name,
+                review: review,
+                photo: photoUrl,
+                timestamp: firebase.firestore.FieldValue.serverTimestamp()
+            });
+
+            alert("🙏 अनुभव फोटो के साथ साझा किया गया!");
+            location.reload(); 
+        } catch (error) {
+            console.error("Error:", error);
+            alert("Photo upload nahi ho payi, koshish karte rahein.");
+        }
+    } else {
+        alert("कृपया नाम और अनुभव भरें।");
+    }
+}
+
+            // 2. Phir Firestore mein data save karein
+            await db.collection("reviews").add({
+                name: name,
+                review: review,
+                photo: photoUrl,
+                timestamp: firebase.firestore.FieldValue.serverTimestamp()
+            });
+
+            alert("🙏 आपका अनुभव फोटो के साथ साझा किया गया!");
+            nameInput.value = '';
+            reviewInput.value = '';
+            photoInput.value = '';
+        } catch (error) {
+            console.error("Error:", error);
+            alert("Kuch galti hui, kripya fir koshish karein.");
+        }
+    } else {
+        alert("कृपया नाम और अनुभव दोनों भरें।");
+    }
+}
+
+
+function displayReviews() {
+    const reviewsList = document.getElementById('reviewsList');
+    const viewMoreBtn = document.getElementById('viewMoreBtn');
     
-    const name = nameInput.value.trim();
-    const review = reviewInput.value.trim();
-    const 
+    db.collection("reviews").orderBy("timestamp", "desc").onSnapshot((querySnapshot) => {
+        reviewsList.innerHTML = "";
+        let count = 0;
+        
+        querySnapshot.forEach((doc) => {
+            count++;
+            const data = doc.data();
+            
+            // ✨ Naya Code yahan aayega ✨
+            const reviewHtml = `
+                <div class="wisdom-card" style="border-left: 5px solid #ff9933; margin-bottom: 15px; padding: 15px; text-align:left; ${count > 3 ? 'display: none;' : ''}">
+                    ${data.photo ? `<img src="${data.photo}" style="width:100%; max-height:250px; object-fit:cover; border-radius:10px; margin-bottom:10px;">` : ''}
+                    <p style="font-style: italic; color:#333;">"${data.review}"</p>
+                    <small style="color:#B22222;"><strong>- ${data.name}</strong></small>
+                </div>
+            `;
+            reviewsList.innerHTML += reviewHtml;
+        });
+
+        if (count > 3) {
+            viewMoreBtn.style.display = "block";
+        }
+    });
+}
+
+
+
+// Button click hone par baki reviews dikhane ke liye
+function toggleReviews() {
+    const hiddenReviews = document.querySelectorAll('#reviewsList .wisdom-card[style*="display: none"]');
+    hiddenReviews.forEach(rev => rev.style.display = "block");
+    document.getElementById('viewMoreBtn').style.display = "none";
+}
+
+
+// Initialize Reviews
+displayReviews();

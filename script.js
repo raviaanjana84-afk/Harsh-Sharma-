@@ -1,20 +1,20 @@
-// 1. Firebase Configuration
+// 1. Firebase Initialization
 const firebaseConfig = {
-  apiKey: "AIzaSyDO8kxU1t9zcfD0MXf6vhLlE3FR_CUKycE",
-  authDomain: "harsh-sharma-website-f01ac.firebaseapp.com",
-  projectId: "harsh-sharma-website-f01ac",
-  storageBucket: "harsh-sharma-website-f01ac.firebasestorage.app",
-  messagingSenderId: "8698683996",
-  appId: "1:8698683996:web:58cd2b05fcf71646e0bc99"
+    apiKey: "AIzaSyDO8kxU1t9zcfD0MXf6vhLlE3FR_CUKycE",
+    authDomain: "harsh-sharma-website-f01ac.firebaseapp.com",
+    projectId: "harsh-sharma-website-f01ac",
+    storageBucket: "harsh-sharma-website-f01ac.firebasestorage.app",
+    messagingSenderId: "8698683996",
+    appId: "1:8698683996:web:58cd2b05fcf71646e0bc99"
 };
 
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
-// 2. Spiritual Data (Information Storage)
+// 2. Data Content
 const spiritualData = {
     'pujan': `
-        <h2 style="color: #B22222; text-align: center;">🕉️ मुख्य पूजन विभाग</h2>
+        <h2>🕉️ मुख्य पूजन विभाग</h2>
         <div class="pujan-menu">
             <div class="pujan-card" onclick="showSection('mangal')">🚩 मंगल दोष (भात पूजन)</div>
             <div class="pujan-card" onclick="showSection('kaalsarp')">🐍 कालसर्प दोष निवारण</div>
@@ -23,299 +23,124 @@ const spiritualData = {
             <div class="pujan-card" onclick="showSection('navgrah')">✨ नवग्रह शांति</div>
             <div class="pujan-card" onclick="showSection('baglamukhi')">🛡️ माँ बगलामुखी हवन पूजन</div>
         </div>
-        <button class="back-link" style="margin-top:20px; width:100%;" onclick="hideSection()">← मुख्य पेज</button>
-    `,
+        <button class="back-link-btn" onclick="hideSection()">← मुख्य पेज</button>`,
     'mangal': `
-        <h2 style="color: #B22222;">🚩 मंगल दोष निवारण (भात पूजन)</h2>
-        <p><b>जानकारी:</b> मंगल दोष से निवारण हेतु मंगल भात पूजन विशेष रूप से उज्जैन में मंगलनाथ मंदिर पर किया जाता है।</p>
+        <h2>🚩 मंगल दोष निवारण</h2>
+        <p>मंगल दोष से निवारण हेतु मंगल भात पूजन विशेष रूप से उज्जैन में मंगलनाथ मंदिर पर किया जाता है।</p>
         <div class="price-box">💰 शुल्क: ₹1350 - ₹5100</div>
-        <button class="book-now-btn" onclick="openWhatsApp('मंगल भात पूजन')">📅 बुकिंग के लिए संपर्क करें</button>
-        <button class="back-link" onclick="showSection('pujan')">← वापस सूची देखें</button>
-    `,
-    'kaalsarp': `
-        <h2 style="color: #444;">🐍 कालसर्प दोष निवारण</h2>
-        <p><b>जानकारी:</b> कालसर्प नामक दोष से निवारण हेतु नवकूल चांदी के नाग नागिन का पूजन कर विसर्जन किया जाता है।</p>
-        <div class="price-box">💰 शुल्क: ₹2100 - ₹5100</div>
-        <button class="book-now-btn" onclick="openWhatsApp('कालसर्प पूजन')">📅 बुकिंग के लिए संपर्क करें</button>
-        <button class="back-link" onclick="showSection('pujan')">← वापस सूची देखें</button>
-    `,
-    'ark_vivah': `
-        <h2 style="color: #228B22;">🌿 अर्क विवाह (पुरुषों हेतु)</h2>
-        <p><b>जानकारी:</b> यह पूजन पुरुषों की कुंडली में मांगलिक दोष या विवाह में आ रही बाधाओं को दूर करने के लिए किया जाता है। इसमें प्रतीकात्मक रूप से अर्क वृक्ष से विवाह किया जाता है।</p>
-        <div class="price-box">💰 शुल्क: ₹2500 - ₹5100</div>
-        <button class="book-now-btn" onclick="openWhatsApp('अर्क विवाह')">📅 बुकिंग के लिए संपर्क करें</button>
-        <button class="back-link" onclick="showSection('pujan')">← वापस सूची देखें</button>
-    `,
-    'kumbh_vivah': `
-        <h2 style="color: #8B4513;">🏺 कुंभ विवाह (स्त्रियों हेतु)</h2>
-        <p><b>जानकारी:</b> यह मुख्य रूप से स्त्रियों की जन्म कुंडली में मांगलिक दोष या विवाह में आनी वाली अड़चनों को दूर करने के लिए किया जाता है। इसमें विष्णु स्वरूप कुंभ से विवाह होता है।</p>
-        <div class="price-box">💰 शुल्क: ₹2500 - ₹5100</div>
-        <button class="book-now-btn" onclick="openWhatsApp('कुंभ विवाह')">📅 बुकिंग के लिए संपर्क करें</button>
-        <button class="back-link" onclick="showSection('pujan')">← वापस सूची देखें</button>
-    `,
-    'navgrah': `
-        <h2 style="color: #4B0082;">✨ नवग्रह शांति</h2>
-        <p><b>जानकारी:</b> जीवन में ग्रहों की प्रतिकूलता को दूर करने और सुख-समृद्धि के लिए नवग्रह शांति पूजन किया जाता है।</p>
-        <div class="price-box">💰 शुल्क: ₹2350 - ₹3100</div>
-        <button class="book-now-btn" onclick="openWhatsApp('नवग्रह शांति')">📅 बुकिंग के लिए संपर्क करें</button>
-        <button class="back-link" onclick="showSection('pujan')">← वापस सूची देखें</button>
-    `,
-    'baglamukhi': `
-        <h2 style="color: #FFD700;">🛡️ माँ बगलामुखी हवन पूजन</h2>
-        <p><b>जानकारी:</b> शत्रुओं पर विजय, कोर्ट कचहरी, तंत्र बाधा और सर्व कार्य सिद्धि हेतु माँ बगलामुखी विशेष हवन किया जाता है।</p>
-        <div class="price-box">💰 शुल्क: ₹2350 - ₹11000</div>
-        <button class="book-now-btn" onclick="openWhatsApp('माँ बगलामुखी हवन')">📅 बुकिंग के लिए संपर्क करें</button>
-        <button class="back-link" onclick="showSection('pujan')">← वापस सूची देखें</button>
-    `,
-      'hawan': `
-        <div style="text-align: left; background: #ffffff; padding: 15px; border-radius: 12px;">
-            <h2 style="color: #B22222; text-align: center; border-bottom: 2px solid #FFD700; padding-bottom: 10px;">🔥 माँ बगलामुखी विशेष हवन</h2>
-            
-            <p style="font-size: 16px; line-height: 1.6; color: #333;">
-                माँ बगलामुखी हवन पूजन से अत्यधिक एवं आध्यात्मिक लाभ प्राप्त होता है। यह अनुष्ठान जीवन की कठिन से कठिन बाधाओं को दूर करने के लिए अचूक माना जाता है।
-            </p>
-
-            <h3 style="color: #ff9933; margin-top: 15px;">✨ इन समस्याओं के समाधान हेतु:</h3>
-            <ul style="color: #444; line-height: 1.8; padding-left: 5px;">
-                <li>⚔️ <b>शत्रु विजय:</b> विरोधियों और शत्रुओं पर पूर्ण विजय हेतु।</li>
-                <li>⚖️ <b>कानूनी मामले:</b> कोर्ट-कचहरी और मुकदमों से स्थायी मुक्ति।</li>
-                <li>🚩 <b>राजनीतिक सफलता:</b> चुनाव एवं राजनीति में उच्च पद प्राप्ति हेतु।</li>
-                <li>🛡️ <b>तंत्र बाधा:</b> नकारात्मक ऊर्जा और तंत्र बाधाओं का समूल नाश।</li>
-                <li>💰 <b>लक्ष्मी प्राप्ति:</b> ऋण (कर्ज) से मुक्ति और आर्थिक समृद्धि।</li>
-                <li>👨‍👩‍👦 <b>पारिवारिक सुख:</b> संतान प्राप्ति और सर्व कार्य सिद्धि हेतु।</li>
-            </ul>
-
-            <h3 style="color: #B22222; margin-top: 20px;">📜 हवन के प्रकार एवं सामग्री:</h3>
-            
-            <div style="background: #fffcf0; padding: 12px; border-radius: 8px; border-left: 5px solid #FFD700; margin-bottom: 10px;">
-                <p><b>1. सामान्य हवन:</b> (सरसों, शुद्ध घी एवं गोले द्वारा)</p>
-                <p style="color: #B22222; font-weight: bold;">दक्षिणा: ₹2,350</p>
-            </div>
-
-            <div style="background: #fffcf0; padding: 12px; border-radius: 8px; border-left: 5px solid #FFD700; margin-bottom: 10px;">
-                <p><b>2. विशेष हवन:</b> (21 प्रकार की दुर्लभ जड़ी-बूटियाँ, लाल मिर्ची, सरसों, घी एवं गोले द्वारा)</p>
-                <p style="color: #B22222; font-weight: bold;">दक्षिणा: ₹5,100</p>
-            </div>
-
-            <div style="background: #fffcf0; padding: 12px; border-radius: 8px; border-left: 5px solid #FFD700; margin-bottom: 10px;">
-                <p><b>3. महाविशेष हवन:</b> (36 प्रकार की जड़ी-बूटियाँ, नींबू, काली मिर्ची, लाल मिर्ची, सरसों, घी एवं गोले द्वारा तांत्रोक्त विधि से)</p>
-                <p style="color: #B22222; font-weight: bold;">दक्षिणा: ₹11,000</p>
-            </div>
-
-            <button class="book-now-btn" onclick="openWhatsApp('माँ बगलामुखी हवन')">📅 हवन बुकिंग हेतु संपर्क करें</button>
-            <button class="back-link" style="margin-top: 15px; width: 100%;" onclick="hideSection()">← वापस मुख्य पेज</button>
-        </div>
-    `,
-
-      'kundli': `
-        <div style="text-align: left; background: #ffffff; padding: 15px; border-radius: 12px;">
-            <h2 style="color: #B22222; text-align: center; border-bottom: 2px solid #FFD700; padding-bottom: 10px;">📜 कुंडली निर्माण एवं विश्लेषण</h2>
-            
-            <p style="font-size: 16px; line-height: 1.6; color: #333;">
-                <b>"प्रत्येक व्यक्ति की जन्म कुंडली उसके जीवन का दर्पण होती है।"</b><br>
-                हमारे द्वारा शुद्ध गणितीय गणना और प्राचीन ज्योतिषीय सिद्धांतों के आधार पर सटीक कुंडली तैयार की जाती है।
-            </p>
-
-            <h3 style="color: #ff9933; margin-top: 15px;">✨ हम आपकी कैसे सहायता करेंगे?</h3>
-            <ul style="color: #444; line-height: 1.8; padding-left: 5px;">
-                <li>✅ <b>सटीक भविष्यफल:</b> शिक्षा, करियर, और व्यापार में सही दिशा की पहचान।</li>
-                <li>✅ <b>दोष निवारण:</b> कालसर्प, पितृदोष या मांगलिक दोष का ज्योतिषीय समाधान।</li>
-                <li>✅ <b>ग्रह शांति:</b> प्रतिकूल ग्रहों को शांत करने के सरल एवं अचूक उपाय।</li>
-                <li>✅ <b>वैवाहिक परामर्श:</b> सुखी दांपत्य जीवन हेतु गुण मिलान और परामर्श।</li>
-            </ul>
-
-            <h3 style="color: #B22222; margin-top: 20px;">📜 सेवा एवं दक्षिणा शुल्क:</h3>
-            
-            <div style="background: #fffcf0; padding: 12px; border-radius: 8px; border-left: 5px solid #FFD700; margin-bottom: 10px;">
-                <p><b>1. कुंडली निर्माण (Full Report):</b> शुद्ध गणना के साथ पूर्ण जन्म पत्रिका तैयार करना।</p>
-                <p style="color: #B22222; font-weight: bold; font-size: 1.1rem;">शुल्क: ₹2,100</p>
-            </div>
-
-            <div style="background: #fffcf0; padding: 12px; border-radius: 8px; border-left: 5px solid #FFD700; margin-bottom: 10px;">
-                <p><b>2. कुंडली विश्लेषण (Consultation):</b> वर्तमान समस्याओं पर ज्योतिषीय परामर्श एवं सटीक उपाय।</p>
-                <p style="color: #B22222; font-weight: bold; font-size: 1.1rem;">शुल्क: ₹500</p>
-            </div>
-
-            <button class="book-now-btn" style="background: #25D366; width: 100%; margin-top: 20px; padding: 15px; border-radius: 8px; color: white; border: none; font-weight: bold; cursor: pointer;" 
-                onclick="openWhatsApp('कुंडली सेवा')">
-                📅 परामर्श के लिए संपर्क करें
-            </button>
-            
-            <button class="back-link" style="margin-top: 15px; width: 100%; color: #B22222; background: none; border: none; cursor: pointer;" 
-                onclick="hideSection()">← वापस मुख्य पेज</button>
-        </div>
-    `,
-  
-       'mantra': `
-        <div style="text-align: left; background: #ffffff; padding: 15px; border-radius: 12px;">
-            <h2 style="color: #B22222; text-align: center; border-bottom: 2px solid #FFD700; padding-bottom: 10px;">🕉️ मंत्र जाप एवं अनुष्ठान</h2>
-            
-            <p style="font-size: 16px; line-height: 1.6; color: #333;">
-                <b>"मन्त्राणां जपतः सिद्धिः"</b> - मंत्रों के शुद्ध उच्चारण और निरंतर जाप से असंभव कार्य भी सिद्ध हो जाते हैं। हम शास्त्रोंक्त विधि से आपके लिए विशेष अनुष्ठान संपन्न करते हैं।
-            </p>
-
-            <h3 style="color: #ff9933; margin-top: 15px;">✨ मुख्य अनुष्ठान सेवाएँ:</h3>
-            <ul style="color: #444; line-height: 1.8; padding-left: 5px;">
-                <li>🔥 <b>महामृत्युंजय जाप:</b> असाध्य रोगों से मुक्ति और अकाल मृत्यु के भय के निवारण हेतु।</li>
-                <li>🛡️ <b>बगलामुखी मंत्र:</b> शत्रु दमन, विजय प्राप्ति और तंत्र बाधा से रक्षा हेतु।</li>
-                <li>💰 <b>श्री सूक्त पाठ:</b> मां लक्ष्मी की कृपा और व्यापार में वृद्धि हेतु।</li>
-                <li>📖 <b>गीता पाठ/सुंदरकांड:</b> घर में शांति और सकारात्मक ऊर्जा के संचार हेतु।</li>
-            </ul>
-
-            <div style="background: #fffcf0; padding: 15px; border-radius: 8px; border-left: 5px solid #B22222; margin-top: 20px;">
-                <p style="margin: 0;"><b>सूचना:</b> मंत्र जाप की संख्या और दक्षिणा आपकी समस्या एवं अनुष्ठान के प्रकार पर निर्भर करती है।</p>
-            </div>
-
-            <button class="book-now-btn" style="background: #25D366; width: 100%; margin-top: 20px; padding: 15px; border-radius: 8px; color: white; border: none; font-weight: bold;" 
-                onclick="openWhatsApp('मंत्र जाप अनुष्ठान')">
-                📅 संकल्प हेतु संपर्क करें
-            </button>
-            
-            <button class="back-link" style="margin-top: 15px; width: 100%; color: #B22222;" 
-                onclick="hideSection()">← वापस मुख्य पेज</button>
-        </div>
-    `,
-  
-    
+        <button class="book-now-btn" onclick="openWhatsApp('मंगल भात पूजन')">📅 बुकिंग करें</button>
+        <button class="back-link-btn" onclick="showSection('pujan')">← वापस सूची</button>`,
+    'hawan': `
+        <h2>🔥 माँ बगलामुखी विशेष हवन</h2>
+        <p>शत्रु विजय, कानूनी मामले, और तंत्र बाधा निवारण हेतु अचूक अनुष्ठान।</p>
+        <div class="price-box">दक्षिणा: ₹2,350 से ₹11,000</div>
+        <button class="book-now-btn" onclick="openWhatsApp('माँ बगलामुखी हवन')">📅 हवन बुकिंग हेतु संपर्क करें</button>
+        <button class="back-link-btn" onclick="hideSection()">← वापस मुख्य पेज</button>`,
+    'kundli': `
+        <h2>📜 कुंडली विश्लेषण</h2>
+        <p>शुद्ध गणितीय गणना और प्राचीन सिद्धांतों के आधार पर सटीक भविष्यफल।</p>
+        <div class="price-box">परामर्श शुल्क: ₹500 | पूर्ण कुंडली: ₹2100</div>
+        <button class="book-now-btn" onclick="openWhatsApp('कुंडली सेवा')">📅 परामर्श हेतु संपर्क करें</button>
+        <button class="back-link-btn" onclick="hideSection()">← वापस मुख्य पेज</button>`,
+    'mantra': `
+        <h2>🕉️ मंत्र जाप एवं अनुष्ठान</h2>
+        <p>महामृत्युंजय जाप, श्री सूक्त पाठ और सुंदरकांड हेतु संपर्क करें।</p>
+        <button class="book-now-btn" onclick="openWhatsApp('मंत्र जाप अनुष्ठान')">📅 संकल्प हेतु संपर्क करें</button>
+        <button class="back-link-btn" onclick="hideSection()">← वापस मुख्य पेज</button>`
 };
 
-// 3. Navigation Functions
+// 3. Functions
 function showSection(key) {
     const overlay = document.getElementById('overlay');
     const content = document.getElementById('overlay-content');
-    
     if (!spiritualData[key]) return;
-
     content.innerHTML = spiritualData[key];
-    overlay.style.display = 'flex'; 
-    overlay.classList.add('active');
+    overlay.style.display = 'flex';
     document.body.style.overflow = 'hidden';
-
-    window.history.pushState({overlayOpen: true}, ""); 
 }
 
 function hideSection() {
-    const overlay = document.getElementById('overlay');
-    overlay.style.display = 'none';
-    overlay.classList.remove('active');
+    document.getElementById('overlay').style.display = 'none';
     document.body.style.overflow = 'auto';
 }
 
-// WhatsApp Booking Function
 function openWhatsApp(service) {
-    const phone = "918319714682"; 
-    const msg = `प्रणाम पंडित जी, मुझे "${service}" के बारे में जानकारी और बुकिंग चाहिए।`;
-    window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, '_blank');
+    const phone = "918319714682";
+    const msg = encodeURIComponent(`प्रणाम पंडित जी, मुझे "${service}" के बारे में जानकारी चाहिए।`);
+    window.open(`https://wa.me/${phone}?text=${msg}`, '_blank');
 }
 
-// Mobile Back Button Support
-window.onpopstate = function() {
-    hideSection();
-};
-
 // 4. Review System
-
 async function saveReview() {
     const name = document.getElementById('userName').value.trim();
     const review = document.getElementById('userReview').value.trim();
     const photoFile = document.getElementById('userPhoto').files[0];
-    let photoUrl = "";
+    const btn = document.getElementById('submitBtn');
 
-    if (name && review) {
-        try {
-            // ImgBB par photo upload ho rahi hai
-            if (photoFile) {
-                const formData = new FormData();
-                formData.append("image", photoFile);
-                
-                // Aapki API Key yahan set kar di hai
-                const response = await fetch("https://api.imgbb.com/1/upload?key=2705a30bb29595bfa91f1dc8fa478ef4", {
-                    method: "POST",
-                    body: formData
-                });
-                const result = await response.json();
-                photoUrl = result.data.url; // Photo ka link mil gaya!
-            }
-
-            // Text aur Photo Link Firestore mein save ho raha hai
-            await db.collection("reviews").add({
-                name: name,
-                review: review,
-                photo: photoUrl,
-                timestamp: firebase.firestore.FieldValue.serverTimestamp()
-            });
-
-            alert("🙏 अनुभव फोटो के साथ साझा किया गया!");
-            location.reload(); 
-        } catch (error) {
-            console.error("Error:", error);
-            alert("Photo upload nahi ho payi, koshish karte rahein.");
-        }
-    } else {
+    if (!name || !review) {
         alert("कृपया नाम और अनुभव भरें।");
+        return;
     }
-}
 
-            // 2. Phir Firestore mein data save karein
-            await db.collection("reviews").add({
-                name: name,
-                review: review,
-                photo: photoUrl,
-                timestamp: firebase.firestore.FieldValue.serverTimestamp()
+    btn.disabled = true;
+    btn.innerText = "कृपया प्रतीक्षा करें...";
+
+    let photoUrl = "";
+    try {
+        if (photoFile) {
+            const formData = new FormData();
+            formData.append("image", photoFile);
+            const res = await fetch("https://api.imgbb.com/1/upload?key=2705a30bb29595bfa91f1dc8fa478ef4", {
+                method: "POST",
+                body: formData
             });
-
-            alert("🙏 आपका अनुभव फोटो के साथ साझा किया गया!");
-            nameInput.value = '';
-            reviewInput.value = '';
-            photoInput.value = '';
-        } catch (error) {
-            console.error("Error:", error);
-            alert("Kuch galti hui, kripya fir koshish karein.");
+            const data = await res.json();
+            photoUrl = data.data.url;
         }
-    } else {
-        alert("कृपया नाम और अनुभव दोनों भरें।");
-    }
-}
 
-
-function displayReviews() {
-    const reviewsList = document.getElementById('reviewsList');
-    const viewMoreBtn = document.getElementById('viewMoreBtn');
-    
-    db.collection("reviews").orderBy("timestamp", "desc").onSnapshot((querySnapshot) => {
-        reviewsList.innerHTML = "";
-        let count = 0;
-        
-        querySnapshot.forEach((doc) => {
-            count++;
-            const data = doc.data();
-            
-            // ✨ Naya Code yahan aayega ✨
-            const reviewHtml = `
-                <div class="wisdom-card" style="border-left: 5px solid #ff9933; margin-bottom: 15px; padding: 15px; text-align:left; ${count > 3 ? 'display: none;' : ''}">
-                    ${data.photo ? `<img src="${data.photo}" style="width:100%; max-height:250px; object-fit:cover; border-radius:10px; margin-bottom:10px;">` : ''}
-                    <p style="font-style: italic; color:#333;">"${data.review}"</p>
-                    <small style="color:#B22222;"><strong>- ${data.name}</strong></small>
-                </div>
-            `;
-            reviewsList.innerHTML += reviewHtml;
+        await db.collection("reviews").add({
+            name: name,
+            review: review,
+            photo: photoUrl,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp()
         });
 
-        if (count > 3) {
-            viewMoreBtn.style.display = "block";
-        }
+        alert("🙏 अनुभव साझा किया गया!");
+        location.reload();
+    } catch (e) {
+        console.error(e);
+        alert("त्रुटि हुई, पुनः प्रयास करें।");
+        btn.disabled = false;
+        btn.innerText = "✨ अनुभव साझा करें ✨";
+    }
+}
+
+function displayReviews() {
+    const list = document.getElementById('reviewsList');
+    const btn = document.getElementById('viewMoreBtn');
+    
+    db.collection("reviews").orderBy("timestamp", "desc").onSnapshot(snap => {
+        list.innerHTML = "";
+        let i = 0;
+        snap.forEach(doc => {
+            const d = doc.data();
+            i++;
+            const html = `
+                <div class="review-item" style="${i > 3 ? 'display:none' : ''}">
+                    ${d.photo ? `<img src="${d.photo}" class="rev-img">` : ''}
+                    <p>"${d.review}"</p>
+                    <small>- ${d.name}</small>
+                </div>`;
+            list.innerHTML += html;
+        });
+        if (i > 3) btn.style.display = "block";
     });
 }
 
-
-
-// Button click hone par baki reviews dikhane ke liye
 function toggleReviews() {
-    const hiddenReviews = document.querySelectorAll('#reviewsList .wisdom-card[style*="display: none"]');
-    hiddenReviews.forEach(rev => rev.style.display = "block");
+    const hidden = document.querySelectorAll('.review-item[style*="display:none"]');
+    hidden.forEach(r => r.style.display = "block");
     document.getElementById('viewMoreBtn').style.display = "none";
 }
 
-
-// Initialize Reviews
 displayReviews();

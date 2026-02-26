@@ -1,4 +1,3 @@
-        // Firebase Config
 const firebaseConfig = {
 apiKey: "YOUR_API_KEY",
 authDomain: "YOUR_AUTH_DOMAIN",
@@ -8,79 +7,67 @@ projectId: "YOUR_PROJECT_ID"
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
+const sections = {
 
-// Overlay Content
-const data = {
 pujan: `
-<h2>🕉️ पूजन सेवाएँ</h2>
-<p>मंगल दोष, कालसर्प, नवग्रह शांति आदि।</p>
-<button onclick="openWhatsApp('पूजन सेवा')">बुक करें</button>
+<h2>🕉️ मुख्य पूजन सेवाएँ</h2>
+<ul>
+<li>🚩 मंगल दोष (₹1350 - ₹5100)</li>
+<li>🐍 कालसर्प दोष (₹2100 - ₹5100)</li>
+<li>✨ नवग्रह शांति (₹2350 - ₹3100)</li>
+<li>🛡️ माँ बगलामुखी हवन (₹2350 - ₹11000)</li>
+</ul>
+<button onclick="bookNow('पूजन सेवा')">बुक करें</button>
 `,
 
 kundli: `
 <h2>📜 कुंडली विश्लेषण</h2>
-<p>शुद्ध गणना के आधार पर भविष्यफल।</p>
-<button onclick="openWhatsApp('कुंडली सेवा')">संपर्क करें</button>
+<p>शुद्ध गणितीय गणना द्वारा भविष्यफल।</p>
+<p>₹500 – ₹2100</p>
+<button onclick="bookNow('कुंडली सेवा')">संपर्क करें</button>
 `,
 
 mantra: `
-<h2>🕉️ मंत्र जाप</h2>
-<p>महामृत्युंजय, श्री सूक्त, सुंदरकांड पाठ।</p>
-<button onclick="openWhatsApp('मंत्र जाप')">संपर्क करें</button>
+<h2>🕉️ मंत्र अनुष्ठान</h2>
+<p>महामृत्युंजय जाप, श्री सूक्त पाठ, सुंदरकांड</p>
+<button onclick="bookNow('मंत्र अनुष्ठान')">संपर्क करें</button>
+`,
+
+gallery: `
+<h2>📸 पावन दर्शन</h2>
+<img src="https://images.unsplash.com/photo-1604543163833-3b60f124430e?q=80&w=400" width="100%">
 `
 };
 
-
-// Show Overlay
-function showSection(key){
-document.getElementById('overlay-data').innerHTML = data[key];
-document.getElementById('overlay').style.display = "flex";
+function openSection(key){
+document.getElementById("dynamicContent").innerHTML = sections[key];
+document.getElementById("overlay").style.display="flex";
 document.body.style.overflow="hidden";
 }
 
-// Hide Overlay
-function hideSection(){
-document.getElementById('overlay').style.display="none";
+function closeSection(){
+document.getElementById("overlay").style.display="none";
 document.body.style.overflow="auto";
 }
 
-// WhatsApp
-function openWhatsApp(service){
+function bookNow(service){
 const phone="918319714682";
 const msg=encodeURIComponent(`प्रणाम पंडित जी, मुझे ${service} के बारे में जानकारी चाहिए।`);
 window.open(`https://wa.me/${phone}?text=${msg}`,"_blank");
 }
 
-
-// Save Review
-async function saveReview(){
-const name=document.getElementById("name").value;
-const review=document.getElementById("review").value;
-
-if(!name || !review){
-alert("कृपया सभी जानकारी भरें");
-return;
-}
-
-await db.collection("reviews").add({
-name,
-review,
-time:firebase.firestore.FieldValue.serverTimestamp()
-});
-
-alert("धन्यवाद 🙏");
-location.reload();
-}
-
-// Display Reviews
-db.collection("reviews").orderBy("time","desc").onSnapshot(snap=>{
-const div=document.getElementById("reviews");
-div.innerHTML="";
+db.collection("reviews").orderBy("timestamp","desc").onSnapshot(snap=>{
+let html="";
+let count=0;
 snap.forEach(doc=>{
+count++;
+if(count<=3){
 const d=doc.data();
-div.innerHTML+=`<div class="review-item">
+html+=`<div class="review-item">
 <p>"${d.review}"</p>
 <small>- ${d.name}</small>
 </div>`;
+}
 });
+document.getElementById("reviewsList").innerHTML=html;
 });

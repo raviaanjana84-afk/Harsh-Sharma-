@@ -13,7 +13,7 @@ if (!firebase.apps.length) {
 }
 const db = firebase.firestore();
 
-// 2. Data Content (Sab kuch details aur price ke saath)
+// 2. Sabhi Sections ka Data (Pujan, Hawan, Kundli, etc.)
 const spiritualData = {
     'pujan': `
         <h2 style="color: #B22222; text-align: center;">🕉️ मुख्य पूजन विभाग</h2>
@@ -29,7 +29,6 @@ const spiritualData = {
     `,
     'hawan': `
         <h2 style="color: #B22222;">🔥 हवन विभाग</h2>
-        <p>शुद्धि एवं सकारात्मक ऊर्जा हेतु विशेष अनुष्ठान:</p>
         <div class="pujan-menu">
             <div class="pujan-card" onclick="openWhatsApp('नवग्रह शांति हवन')">✨ नवग्रह शांति हवन</div>
             <div class="pujan-card" onclick="openWhatsApp('सुंदरकांड एवं हवन')">📖 सुंदरकांड पाठ एवं हवन</div>
@@ -73,10 +72,10 @@ const spiritualData = {
         <button class="back-link" onclick="showSection('pujan')">← वापस सूची</button>
     `,
     'baglamukhi': `
-        <h2 style="color: #FFD700; text-align: center; text-shadow: 1px 1px #000;">🛡️ माँ बगलामुखी हवन</h2>
+        <h2 style="color: #FFD700; text-align: center;">🛡️ माँ बगलामुखी हवन</h2>
         <p>शत्रु विजय और बाधा नाश हेतु अचूक अनुष्ठान।</p>
         <div class="price-box">💰 शुल्क: ₹2350 - ₹11,000</div>
-        <button class="book-now-btn" onclick="openWhatsApp('माँ बगलामुखी हवन')">📅 अभी स्लॉट बुक करें</button>
+        <button class="book-now-btn" onclick="openWhatsApp('माँ बगलामुखी हवन')">📅 अभी बुक करें</button>
         <button class="back-link" onclick="showSection('pujan')">← वापस सूची</button>
     `,
     'kundli': `
@@ -85,22 +84,19 @@ const spiritualData = {
         <div class="price-box">शुल्क: ₹500 (परामर्श) | ₹2100 (पूर्ण कुंडली)</div>
         <button class="book-now-btn" onclick="openWhatsApp('कुंडली परामर्श')">📅 संपर्क करें</button>
         <button class="back-link" onclick="hideSection()">← मुख्य पेज</button>
-    `,
-    // 1. मंत्रों का विस्तृत डेटा (Nested Structure)
+    `
+};
+
+// 3. Mantra Section ka Naya Nested Data
 const mantraData = {
     'main': `
         <h2 style="color: #B22222; text-align: center;">🛕 मंत्र विभाग</h2>
-        <p style="font-size:15px; margin-bottom:15px; text-align:center;">सनातन वैदिक परंपरा में मंत्रों को चेतना शुद्धि और आत्मिक उन्नति का माध्यम माना गया है।</p>
+        <p style="font-size:14px; margin-bottom:15px; text-align:center;">सनातन वैदिक परंपरा में मंत्रों को चेतना शुद्धि का माध्यम माना गया है।</p>
         <div class="pujan-menu">
             <div class="pujan-card" onclick="showMantraSub('shiv')">1️⃣ शिव मंत्र</div>
             <div class="pujan-card" onclick="showMantraSub('devi')">2️⃣ देवी मंत्र</div>
-            <div class="pujan-card" onclick="showMantraSub('vishnu')">3️⃣ विष्णु एवं अवतार मंत्र</div>
-            <div class="pujan-card" onclick="showMantraSub('hanuman')">4️⃣ हनुमान एवं शक्ति मंत्र</div>
             <div class="pujan-card" onclick="showMantraSub('navgrah_list')">5️⃣ नवग्रह मंत्र</div>
-            <div class="pujan-card" onclick="showMantraSub('shanti')">6️⃣ वैदिक शांति मंत्र</div>
             <div class="pujan-card" onclick="showMantraSub('rules')">7️⃣ जप के सामान्य नियम</div>
-            <div class="pujan-card" onclick="showMantraSub('imp')">8️⃣ मंत्र साधना का आध्यात्मिक महत्व</div>
-            <div class="pujan-card" onclick="showMantraSub('daily')">9️⃣ दैनिक साधना क्रम</div>
             <div class="pujan-card" onclick="showMantraSub('msg')">🔟 अंतिम संदेश</div>
         </div>
         <button class="back-link" style="width:100%;" onclick="hideSection()">← मुख्य पेज</button>
@@ -110,7 +106,6 @@ const mantraData = {
         <div class="pujan-menu">
             <div class="pujan-card" onclick="showMantraDetail('mahamrityunjay')">🕉️ महामृत्युंजय मंत्र</div>
             <div class="pujan-card" onclick="showMantraDetail('om_namah')">🕉️ ॐ नमः शिवाय</div>
-            <div class="pujan-card" onclick="showMantraDetail('kaal_bhairav')">🔱 कालभैरव मंत्र</div>
         </div>
         <button class="back-link" onclick="showSection('mantra')">← मंत्र सूची</button>
     `,
@@ -118,10 +113,9 @@ const mantraData = {
         <div style="text-align:left;">
             <h3 style="color: #B22222;">🕉️ महामृत्युंजय मंत्र</h3>
             <p style="background:#fdf2f2; padding:12px; border-radius:8px; font-weight:bold; color:#d32f2f; text-align:center;">
-                ॐ त्र्यम्बकं यजामहे सुगन्धिं पुष्टिवर्वर्धनम् ।<br>उर्वारुकमिव बन्धनान् मृत्योर्मुक्षीय मामृतात् ॥
+                ॐ त्र्यम्बकं यजामहे सुगन्धिं पुष्टिवर्धनम् ।<br>उर्वारुकमिव बन्धनान् मृत्योर्मुक्षीय मामृतात् ॥
             </p>
-            <p><b>अर्थ:</b> हम तीन नेत्र वाले भगवान शिव की उपासना करते हैं, जो जीवन को पोषण देने वाले हैं। वे हमें मृत्यु के बंधनों से मुक्त कर अमृत तत्व प्रदान करें।</p>
-            <p><b>जप विधि:</b> रुद्राक्ष माला से 108 बार जप करें। मुख पूर्व या उत्तर की ओर रखें।</p>
+            <p><b>अर्थ:</b> हम तीन नेत्र वाले भगवान शिव की उपासना करते हैं। वे हमें मृत्यु के बंधनों से मुक्त कर अमृत तत्व प्रदान करें।</p>
         </div>
         <button class="back-link" onclick="showMantraSub('shiv')">← वापस</button>
     `,
@@ -129,8 +123,7 @@ const mantraData = {
         <div style="text-align:left;">
             <h3 style="color: #B22222;">🕉️ ॐ नमः शिवाय</h3>
             <p style="background:#fdf2f2; padding:12px; border-radius:8px; font-weight:bold; color:#d32f2f; text-align:center;">ॐ नमः शिवाय ॥</p>
-            <p><b>अर्थ:</b> मैं भगवान शिव को नमन करता हूँ।</p>
-            <p><b>महत्व:</b> यह पंच तत्वों (पृथ्वी, जल, अग्नि, वायु, आकाश) का संतुलन दर्शाता है।</p>
+            <p><b>अर्थ:</b> मैं भगवान शिव को नमन करता हूँ। यह मंत्र पंच तत्वों का संतुलन दर्शाता है।</p>
         </div>
         <button class="back-link" onclick="showMantraSub('shiv')">← वापस</button>
     `,
@@ -145,7 +138,7 @@ const mantraData = {
     `,
     'navgrah_list': `
         <h2 style="color: #B22222;">✨ नवग्रह मंत्र</h2>
-        <div style="text-align:left; font-size:14px; display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+        <div style="text-align:left; font-size:14px; display:grid; grid-template-columns:1fr 1fr; gap:8px;">
             <span>☀️ सूर्य: ॐ सूर्याय नमः</span>
             <span>🌙 चंद्र: ॐ सोमाय नमः</span>
             <span>🚩 मंगल: ॐ मंगलाय नमः</span>
@@ -153,53 +146,47 @@ const mantraData = {
             <span>🕌 गुरु: ॐ गुरवे नमः</span>
             <span>💍 शुक्र: ॐ शुक्राय नमः</span>
             <span>🌑 शनि: ॐ शनैश्चराय नमः</span>
-            <span>🌪️ राहु: ॐ राहवे नमः</span>
-            <span>☄️ केतु: ॐ केतवे नमः</span>
         </div>
         <button class="back-link" onclick="showSection('mantra')">← वापस</button>
     `,
     'rules': `
         <h2 style="color: #B22222;">📜 जप के नियम</h2>
-        <ul style="text-align:left; line-height:1.8;">
+        <ul style="text-align:left;">
             <li>स्वच्छ एवं शांत स्थान का चयन करें।</li>
             <li>स्पष्ट उच्चारण और एकाग्रता रखें।</li>
             <li>पूर्व या उत्तर दिशा की ओर मुख करें।</li>
-            <li>रुद्राक्ष या चंदन की माला का प्रयोग करें।</li>
         </ul>
         <button class="back-link" onclick="showSection('mantra')">← वापस</button>
     `,
     'msg': `
         <h2 style="color: #B22222;">🔟 अंतिम संदेश</h2>
-        <p style="font-style:italic;">"मंत्र केवल शब्द नहीं, ऊर्जा हैं। श्रद्धा और नियमितता ही सच्ची साधना है। भक्ति और विश्वास से ही आध्यात्मिक उन्नति संभव है।"</p>
+        <p style="font-style:italic;">"मंत्र केवल शब्द नहीं, ऊर्जा हैं। श्रद्धा ही सच्ची साधना है।"</p>
         <button class="back-link" onclick="showSection('mantra')">← वापस</button>
     `
 };
 
-// 2. पुराने Functions के साथ इसे जोड़ें
-function showMantraSub(key) {
-    const content = document.getElementById('overlay-content');
-    content.innerHTML = mantraData[key];
-}
-
-function showMantraDetail(key) {
-    const content = document.getElementById('overlay-content');
-    content.innerHTML = mantraData[key];
-}
-
-// 3. SpiritualData में Mantra का मेन पॉइंट अपडेट करें
-spiritualData['mantra'] = mantraData['main'];
-
-};
-
-// 3. UI Navigation
+// 4. Sabhi Functions (Navigation & Review)
 function showSection(key) {
     const overlay = document.getElementById('overlay');
     const content = document.getElementById('overlay-content');
-    if (spiritualData[key]) {
+    
+    // Agar mantra click hua hai
+    if (key === 'mantra') {
+        content.innerHTML = mantraData['main'];
+    } else if (spiritualData[key]) {
         content.innerHTML = spiritualData[key];
-        overlay.style.display = 'flex';
-        document.body.style.overflow = 'hidden';
     }
+    
+    overlay.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+}
+
+function showMantraSub(subKey) {
+    document.getElementById('overlay-content').innerHTML = mantraData[subKey];
+}
+
+function showMantraDetail(detailKey) {
+    document.getElementById('overlay-content').innerHTML = mantraData[detailKey];
 }
 
 function hideSection() {
@@ -213,7 +200,7 @@ function openWhatsApp(service) {
     window.open(`https://wa.me/${phone}?text=${msg}`, '_blank');
 }
 
-// 4. Review System
+// 5. Review System
 async function saveReview() {
     const nameInput = document.getElementById('userName');
     const reviewInput = document.getElementById('userReview');
@@ -248,7 +235,7 @@ async function saveReview() {
             timestamp: firebase.firestore.FieldValue.serverTimestamp()
         });
 
-        alert("🙏 आपका अनुभव साझा किया गया!");
+        alert("🙏 अनुभव साझा किया गया!");
         location.reload();
     } catch (e) {
         console.error(e);
@@ -258,10 +245,8 @@ async function saveReview() {
     }
 }
 
-// Review List Display Function
 function displayReviews() {
     const list = document.getElementById('reviewsList');
-    const btn = document.getElementById('viewMoreBtn');
     if (!list) return;
 
     db.collection("reviews").orderBy("timestamp", "desc").onSnapshot(snap => {
@@ -271,25 +256,24 @@ function displayReviews() {
             const d = doc.data();
             count++;
             const html = `
-                <div class="review-item" style="${count > 3 ? 'display:none' : 'padding:15px; border-bottom:1px solid #eee; margin-bottom:10px; background:white; border-radius:10px;'}">
-                    ${d.photo ? `<img src="${d.photo}" style="width:50px; height:50px; border-radius:50%; object-fit:cover; float:left; margin-right:12px;">` : ''}
-                    <div style="overflow:hidden;">
-                        <p style="margin:0; font-style:italic; font-size:15px; color:#444;">"${d.review}"</p>
-                        <small style="color:#B22222; font-weight:bold;">- ${d.name}</small>
+                <div class="review-item" style="${count > 3 ? 'display:none' : 'padding:15px; border-bottom:1px solid #eee; margin-bottom:10px;'}">
+                    ${d.photo ? `<img src="${d.photo}" style="width:50px; height:50px; border-radius:50%; object-fit:cover; float:left; margin-right:10px;">` : ''}
+                    <div>
+                        <p style="margin:0; font-style:italic;">"${d.review}"</p>
+                        <small><b>- ${d.name}</b></small>
                     </div>
                     <div style="clear:both;"></div>
                 </div>`;
             list.innerHTML += html;
         });
-        if (count > 3 && btn) btn.style.display = "block";
+        if (count > 3) document.getElementById('viewMoreBtn').style.display = "block";
     });
 }
 
 function toggleReviews() {
-    const hidden = document.querySelectorAll('.review-item[style*="display:none"]');
-    hidden.forEach(r => r.style.display = "block");
+    document.querySelectorAll('.review-item[style*="display:none"]').forEach(r => r.style.display = "block");
     document.getElementById('viewMoreBtn').style.display = "none";
 }
 
-// Start Reviews automatically
+// Start everything
 document.addEventListener('DOMContentLoaded', displayReviews);

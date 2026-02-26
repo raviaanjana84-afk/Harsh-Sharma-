@@ -7,9 +7,6 @@
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Yantra+Manav:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 </head>
 <body>
 
@@ -23,21 +20,17 @@
 
 <div class="container">
     <div class="menu-grid">
-        <div class="menu-item" onclick="showSection('pujan')">
-            <i class="fas fa-om"></i>
-            <p>पूजन विभाग</p>
+        <div class="menu-item" onclick="window.showSection('pujan')">
+            <i class="fas fa-om"></i><p>पूजन विभाग</p>
         </div>
-        <div class="menu-item" onclick="showSection('hawan')">
-            <i class="fas fa-fire"></i>
-            <p>हवन विभाग</p>
+        <div class="menu-item" onclick="window.showSection('hawan')">
+            <i class="fas fa-fire"></i><p>हवन विभाग</p>
         </div>
-        <div class="menu-item" onclick="showSection('kundli')">
-            <i class="fas fa-scroll"></i>
-            <p>कुंडली विभाग</p>
+        <div class="menu-item" onclick="window.showSection('kundli')">
+            <i class="fas fa-scroll"></i><p>कुंडली विभाग</p>
         </div>
-        <div class="menu-item" onclick="showSection('mantra')">
-            <i class="fas fa-hands-praying"></i>
-            <p>मंत्र विभाग</p>
+        <div class="menu-item" onclick="window.showSection('mantra')">
+            <i class="fas fa-hands-praying"></i><p>मंत्र विभाग</p>
         </div>
     </div>
 
@@ -45,18 +38,13 @@
         <h3>🙏 अपना अनुभव साझा करें</h3>
         <input type="text" id="userName" placeholder="आपका नाम">
         <textarea id="userReview" placeholder="अपना अनुभव लिखें..."></textarea>
-        <p class="file-label">📸 फोटो जोड़ें (Optional):</p>
+        <p style="font-size: 14px; margin-bottom: 5px; color: #666;">📸 फोटो (Optional):</p>
         <input type="file" id="userPhoto" accept="image/*">
-        <button id="submitBtn" onclick="saveReview()">✨ अनुभव साझा करें ✨</button>
-    </div>
-
-    <div class="wisdom-card">
-        <h3>✨ आज का कल्याणकारी विचार</h3>
-        <p id="daily-quote">"कर्मण्येवाधिकारस्ते मा फलेषु कदाचन।" - श्रीमद भगवत गीता</p>
+        <button id="submitBtn" onclick="window.saveReview()">✨ अनुभव साझा करें ✨</button>
     </div>
 
     <div class="featured-video">
-        <h3>📺 विशेष प्रवचन एवं दर्शन</h3>
+        <h3>📺 विशेष दर्शन</h3>
         <div class="video-container">
             <iframe src="https://www.youtube.com/embed?listType=user_uploads&list=PanditHarshSharmaUjjain"></iframe>
         </div>
@@ -64,16 +52,14 @@
 
     <div class="reviews-section">
         <h3>💬 भक्तों के अनुभव</h3>
-        <div id="reviewsList">
-            </div>
-        <button id="viewMoreBtn" onclick="toggleReviews()">और भी अनुभव देखें 👇</button>
+        <div id="reviewsList"></div>
+        <button id="viewMoreBtn" onclick="window.toggleReviews()" style="display:none; width:100%; padding:10px; background:none; border:1px solid #FF9933; color:#FF9933; border-radius:5px; font-weight:bold; margin-top:10px;">और भी देखें 👇</button>
     </div>
 </div>
 
 <div id="overlay" class="overlay">
-    <button class="close-btn" onclick="hideSection()">&times;</button>
-    <div id="overlay-content" class="overlay-inner">
-        </div>
+    <button class="close-btn" onclick="window.hideSection()">&times;</button>
+    <div id="overlay-content" class="overlay-inner"></div>
 </div>
 
 <div class="float-box">
@@ -85,12 +71,12 @@
     <div class="social-links">
         <a href="https://www.youtube.com/@PanditHarshSharmaUjjain" target="_blank"><i class="fab fa-youtube"></i></a>
         <a href="https://www.instagram.com/harshu.0005" target="_blank"><i class="fab fa-instagram"></i></a>
-        <a href="https://www.facebook.com/share/1C2H6wSqTN/" target="_blank"><i class="fab fa-facebook"></i></a>
     </div>
     <p>Designed with ❤️ by Ravi Anjana</p>
 </footer>
 
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 <script src="script.js"></script>
 </body>
-          </html>
-          
+</html>

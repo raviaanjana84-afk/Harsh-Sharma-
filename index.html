@@ -3,56 +3,76 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>पंडित हर्ष शर्मा | उज्जैन आध्यात्मिक सेवाएँ</title>
 
-<meta name="description" content="उज्जैन में पूजन, हवन, कुंडली और मंत्र जाप सेवाएं।">
-<meta name="keywords" content="उज्जैन पंडित, मंगल दोष, कालसर्प, नवग्रह शांति">
+<meta name="description" content="उज्जैन में मंगल दोष, कालसर्प, नवग्रह शांति, बगलामुखी हवन, कुंडली और मंत्र जाप सेवाएं।">
+<meta name="keywords" content="Ujjain Pandit, मंगल दोष, कालसर्प, नवग्रह शांति, बगलामुखी हवन, कुंडली विश्लेषण">
+<meta name="author" content="Ravi Anjana">
 
 <link rel="stylesheet" href="style.css">
+
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Yantra+Manav:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
 </head>
 
 <body>
 
-<header>
-<h1>पंडित हर्ष शर्मा (उज्जैन)</h1>
-<p>श्रीमद भगवत गीता प्रचारक | आध्यात्मिक सेवाएँ</p>
+<header class="hero">
+<h1>🛕 पंडित हर्ष शर्मा</h1>
+<p>उज्जैन | श्रीमद भगवत गीता प्रचारक</p>
+<p class="subline">महाकाल की नगरी में प्रामाणिक आध्यात्मिक सेवाएँ</p>
 </header>
 
-<div class="container">
+<section class="menu-grid">
 
-<div class="menu-grid">
-<div class="menu-item" onclick="showSection('pujan')"><i class="fas fa-om"></i><p>पूजन</p></div>
-<div class="menu-item" onclick="showSection('kundli')"><i class="fas fa-scroll"></i><p>कुंडली</p></div>
-<div class="menu-item" onclick="showSection('mantra')"><i class="fas fa-hands-praying"></i><p>मंत्र</p></div>
-<div class="menu-item" onclick="openWhatsApp('सामान्य जानकारी')"><i class="fab fa-whatsapp"></i><p>संपर्क</p></div>
+<div class="menu-card" onclick="openSection('pujan')">
+<i class="fas fa-om"></i>
+<p>पूजन विभाग</p>
 </div>
 
-<div id="overlay" class="overlay">
+<div class="menu-card" onclick="openSection('kundli')">
+<i class="fas fa-scroll"></i>
+<p>कुंडली विभाग</p>
+</div>
+
+<div class="menu-card" onclick="openSection('mantra')">
+<i class="fas fa-hands-praying"></i>
+<p>मंत्र अनुष्ठान</p>
+</div>
+
+<div class="menu-card" onclick="openSection('gallery')">
+<i class="fas fa-images"></i>
+<p>पावन दर्शन</p>
+</div>
+
+</section>
+
+<section class="reviews-section">
+<h2>🙏 भक्तों के अनुभव</h2>
+<div id="reviewsList"></div>
+<button id="viewMoreBtn" onclick="showAllReviews()">और देखें</button>
+</section>
+
+<div class="overlay" id="overlay">
 <div class="overlay-content">
-<button class="close-btn" onclick="hideSection()">×</button>
-<div id="overlay-data"></div>
+<button class="close-btn" onclick="closeSection()">×</button>
+<div id="dynamicContent"></div>
 </div>
 </div>
 
-<div class="review-box">
-<h3>🙏 अपना अनुभव साझा करें</h3>
-<input type="text" id="name" placeholder="आपका नाम">
-<textarea id="review" placeholder="अपना अनुभव लिखें..."></textarea>
-<button onclick="saveReview()">अनुभव साझा करें</button>
-</div>
-
-<div id="reviews"></div>
-
-</div>
-
-<div class="float-btn" onclick="openWhatsApp('बुकिंग')">
+<a class="float-wa" onclick="bookNow('सामान्य जानकारी')">
 <i class="fab fa-whatsapp"></i>
-</div>
+</a>
+
+<footer>
+<p>© 2026 पंडित हर्ष शर्मा | Designed by Ravi Anjana</p>
+</footer>
 
 <script src="script.js"></script>
 </body>

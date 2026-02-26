@@ -133,3 +133,19 @@ footer { background: #1a1a1a; color: white; text-align: center; padding: 30px; m
     .menu-grid { grid-template-columns: 1fr 1fr; }
     header h1 { font-size: 1.8rem; }
 }
+.back-link {
+    background: none;
+    border: 1px solid var(--main-red);
+    color: var(--main-red);
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    width: 100%;
+}
+
+.back-link:hover {
+    background: var(--main-red);
+    color: white;
+}

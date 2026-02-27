@@ -1,35 +1,45 @@
-// --- 1. PWA & INSTALL LOGIC (सबसे पहले) ---
+// --- 1. PWA & FORCE INSTALL LOGIC ---
 let deferredPrompt;
 
+// सर्विस वर्कर को रजिस्टर करना
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
         navigator.serviceWorker.register('service-worker.js')
-            .then(reg => console.log('Service Worker Live!', reg))
-            .catch(err => console.log('SW Registration Failed!', err));
+            .then(reg => console.log('SW Registered'))
+            .catch(err => console.log('SW Failed', err));
     });
 }
 
+// जब ब्राउज़र ऐप इंस्टॉल करने के लिए तैयार हो
 window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
     deferredPrompt = e;
-    console.log("PWA: ऐप अब इंस्टॉल के लिए तैयार है!");
-    // अगर आपने HTML में 'install-area' बनाया है तो उसे यहाँ दिखा सकते हैं
-    const btnArea = document.getElementById('install-area');
-    if(btnArea) btnArea.style.display = 'block';
+    
+    // स्क्रीन पर एक बटन दिखाएं ताकि यूजर को 3-dots में न जाना पड़े
+    const installDiv = document.createElement('div');
+    installDiv.id = 'manual-install-banner';
+    installDiv.innerHTML = `
+        <div style="position:fixed; bottom:80px; left:5%; width:90%; background:#B22222; color:white; padding:15px; border-radius:10px; text-align:center; z-index:9999; box-shadow:0 5px 15px rgba(0,0,0,0.3);">
+            <p style="margin:0 0 10px 0;">🚩 हमारा ऐप इंस्टॉल करें!</p>
+            <button onclick="window.forceInstall()" style="background:#FFD700; color:#333; border:none; padding:10px 20px; border-radius:5px; font-weight:bold; cursor:pointer;">अभी इंस्टॉल करें</button>
+        </div>
+    `;
+    document.body.appendChild(installDiv);
 });
 
-window.installApp = async () => {
+window.forceInstall = async () => {
     if (deferredPrompt) {
         deferredPrompt.prompt();
         const { outcome } = await deferredPrompt.userChoice;
-        if (outcome === 'accepted') console.log('User installed the app');
+        if (outcome === 'accepted') {
+            const banner = document.getElementById('manual-install-banner');
+            if(banner) banner.remove();
+        }
         deferredPrompt = null;
-    } else {
-        alert("कृपया Chrome मेनू (3-dots) में जाकर 'Install App' चुनें।");
     }
 };
 
-// --- 2. FIREBASE INITIALIZATION ---
+// --- 2. FIREBASE & DATA ---
 const firebaseConfig = {
     apiKey: "AIzaSyDO8kxU1t9zcfD0MXf6vhLlE3FR_CUKycE",
     authDomain: "harsh-sharma-website-f01ac.firebaseapp.com",
@@ -41,27 +51,24 @@ const firebaseConfig = {
 if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
-// --- 3. SPIRITUAL DATA & NAVIGATION ---
+// --- 3. UI FUNCTIONS ---
 const spiritualData = {
     'pujan': `<h2>🕉️ पूजन विभाग</h2><div class="pujan-menu">
         <div class="pujan-card" onclick="window.showSection('mangal')">🚩 मंगल दोष (भात पूजन)</div>
         <div class="pujan-card" onclick="window.showSection('kaalsarp')">🐍 कालसर्प दोष शांति</div>
         </div><button class="back-link" onclick="window.hideSection()">← बंद करें</button>`,
-    'mangal': `<h2>🚩 मंगल दोष पूजन</h2><p>उज्जैन मंगलनाथ मंदिर पर विशेष भात पूजन।</p><button class="book-now-btn" onclick="window.openWhatsApp('मंगल भात पूजन')">अभी बुक करें</button>`,
-    'hawan': `<h2>🔥 हवन विभाग</h2><div class="pujan-menu"><div class="pujan-card" onclick="window.openWhatsApp('नवग्रह हवन')">✨ नवग्रह शांति हवन</div></div>`
+    'mangal': `<h2>🚩 मंगल दोष</h2><p>उज्जैन मंगलनाथ मंदिर पर विशेष पूजन।</p><button class="book-now-btn" onclick="window.openWhatsApp('मंगल भात पूजन')">बुकिंग करें</button>`,
+    'hawan': `<h2>🔥 हवन विभाग</h2><div class="pujan-menu"><div class="pujan-card" onclick="window.openWhatsApp('नवग्रह हवन')">✨ नवग्रह हवन</div></div>`
 };
 
 window.showSection = function(key) {
     const overlay = document.getElementById('overlay');
     const content = document.getElementById('overlay-content');
-    if (key === 'mantra') {
-        // मंत्र का कोड यहाँ (जो आपने पहले बनाया था)
-        content.innerHTML = "<h2>मंत्र विभाग जल्द आ रहा है</h2>"; 
-    } else if (spiritualData[key]) {
+    if (spiritualData[key]) {
         content.innerHTML = spiritualData[key];
+        overlay.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
     }
-    overlay.style.display = 'flex';
-    document.body.style.overflow = 'hidden';
 };
 
 window.hideSection = function() {
@@ -69,16 +76,29 @@ window.hideSection = function() {
     document.body.style.overflow = 'auto';
 };
 
-window.openWhatsApp = function(service) {
-    window.open(`https://wa.me/918319714682?text=प्रणाम, मुझे ${service} की जानकारी चाहिए।`, '_blank');
+window.openWhatsApp = function(s) {
+    window.open(`https://wa.me/918319714682?text=प्रणाम, मुझे ${s} की जानकारी चाहिए।`, '_blank');
 };
 
-// --- 4. REVIEW SYSTEM ---
+// --- 4. REVIEWS & INITIALIZATION ---
 window.saveReview = async function() {
-    const name = document.getElementById('userName').value;
-    const review = document.getElementById('userReview').value;
-    if (name && review) {
-        await db.collection("reviews").add({ name, review, time: new Date() });
+    const n = document.getElementById('userName').value;
+    const r = document.getElementById('userReview').value;
+    if (n && r) {
+        await db.collection("reviews").add({ name: n, review: r, time: new Date() });
         alert("🙏 धन्यवाद!"); location.reload();
     }
 };
+
+function displayReviews() {
+    const list = document.getElementById('reviewsList');
+    if (!list) return;
+    db.collection("reviews").orderBy("time", "desc").limit(5).onSnapshot(snap => {
+        list.innerHTML = "";
+        snap.forEach(doc => {
+            const d = doc.data();
+            list.innerHTML += `<div class="wisdom-card" style="margin:10px 0;"><p>"${d.review}"</p><small>- ${d.name}</small></div>`;
+        });
+    });
+}
+document.addEventListener('DOMContentLoaded', displayReviews);

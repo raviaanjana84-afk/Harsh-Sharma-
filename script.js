@@ -275,18 +275,18 @@ function toggleReviews() {
     document.getElementById('viewMoreBtn').style.display = "none";
 }
 
-self.addEventListener('install', (event) => {
-  event.waitUntil(
-    caches.open('v1').then((cache) => {
-      return cache.addAll(['./', './index.html', './style.css', './script.js']);
-    })
-  );
-});
+// Service Worker Registration
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('service-worker.js')
+    .then(() => console.log("PWA: Service Worker Registered"))
+    .catch(err => console.error("PWA: Registration Failed", err));
+}
 
-self.addEventListener('fetch', (event) => {
-  event.respondWith(
-    caches.match(event.request).then((response) => {
-      return response || fetch(event.request);
-    })
-  );
+// 'Install' बटन को सक्रिय करने के लिए
+let deferredPrompt;
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  console.log("PWA: Ready to install");
+  // आप यहाँ एक बटन दिखा सकते हैं जो यूज़र को इंस्टॉल करने को कहे
 });

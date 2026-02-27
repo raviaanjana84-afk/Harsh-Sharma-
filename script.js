@@ -290,3 +290,11 @@ window.addEventListener('beforeinstallprompt', (e) => {
   console.log("PWA: Ready to install");
   // आप यहाँ एक बटन दिखा सकते हैं जो यूज़र को इंस्टॉल करने को कहे
 });
+self.addEventListener('install', (event) => {
+  console.log('Service Worker installed');
+});
+
+self.addEventListener('fetch', (event) => {
+  // यह लाइन ब्राउज़र को 'Install' बटन दिखाने पर मजबूर करती है
+  event.respondWith(fetch(event.request).catch(() => caches.match(event.request)));
+});

@@ -1,151 +1,18 @@
-:root { 
-    --main-red: #B22222; 
-    --gold: #FFD700; 
-    --saffron: #FF8C00; 
-    --bg: #FFF8F0; 
-}
-
-body { 
-    font-family: 'Poppins', sans-serif; 
-    background: var(--bg); 
-    margin: 0; 
-    color: #333; 
-    line-height: 1.6;
-}
-
-/* Header */
-header { 
-    background: linear-gradient(rgba(178,34,34,0.9), rgba(178,34,34,0.9)), 
-                url('https://images.unsplash.com/photo-1544065603-997f742f36f6?auto=format&fit=crop&q=80'); 
-    padding: 40px 20px; 
-    text-align: center; 
-    color: white; 
-    border-bottom: 5px solid var(--gold); 
-}
-
-header h1 { font-family: 'Yantra Manav', sans-serif; color: var(--gold); margin: 0; }
-
-.header-quote {
-    padding-top: 15px;
-    border-top: 1px solid rgba(255,215,0,0.3);
-    max-width: 400px;
-    margin: 15px auto 0;
-    font-style: italic;
-    color: var(--gold);
-}
-
+:root { --main-red: #B22222; --gold: #FFD700; --saffron: #FF8C00; --bg: #FFF8F0; }
+body { font-family: 'Poppins', sans-serif; background: var(--bg); margin: 0; color: #333; line-height: 1.6; }
+header { background: var(--main-red); padding: 40px 20px; text-align: center; color: white; border-bottom: 5px solid var(--gold); }
 .container { padding: 20px; max-width: 800px; margin: auto; }
-
-/* Grid Menu */
-.menu-grid { 
-    display: grid; 
-    grid-template-columns: 1fr 1fr; 
-    gap: 15px; 
-    margin-top: -30px; 
-    margin-bottom: 30px; 
-}
-
-.menu-item { 
-    background: white; 
-    padding: 20px; 
-    border-radius: 15px; 
-    text-align: center; 
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1); 
-    cursor: pointer; 
-    border-bottom: 4px solid var(--saffron); 
-    transition: 0.3s; 
-}
-
-.menu-item i { font-size: 2rem; color: var(--main-red); margin-bottom: 10px; }
-
-/* Cards & Forms */
-.wisdom-card { 
-    background: white; 
-    padding: 20px; 
-    border-radius: 15px; 
-    border-left: 5px solid var(--gold); 
-    margin-bottom: 25px; 
-    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-}
-
-.wisdom-card input, .wisdom-card textarea {
-    width: 100%; padding: 12px; margin-bottom: 10px;
-    border-radius: 8px; border: 1px solid #ddd; box-sizing: border-box;
-}
-
-.wisdom-card button {
-    background: var(--saffron); color: white; width: 100%; 
-    padding: 12px; border: none; border-radius: 8px; 
-    font-weight: bold; cursor: pointer;
-}
-
-/* Overlays */
-.overlay { 
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-    background: rgba(0,0,0,0.85); z-index: 1000; display: none; 
-    justify-content: center; align-items: center; padding: 20px;
-}
-
-.overlay-inner { 
-    background: white; padding: 25px; border-radius: 20px; 
-    max-width: 500px; width: 100%; max-height: 85vh; overflow-y: auto; 
-    position: relative; text-align: center;
-}
-
-.close-btn { 
-    position: absolute; top: 10px; right: 15px; 
-    font-size: 35px; color: #333; background: none; border: none; cursor: pointer; 
-}
-
-/* Pujan Cards inside Overlay */
-.pujan-menu { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
-.pujan-card { 
-    background: #FFF8F0; padding: 15px; border-radius: 10px; 
-    border-left: 5px solid var(--saffron); font-weight: bold; cursor: pointer; 
-    text-align: left; transition: 0.2s;
-}
-.pujan-card:hover { background: #FFE4C4; }
-
-.price-box { 
-    margin: 15px 0; padding: 10px; background: #fdf2f2; 
-    border: 1px dashed var(--main-red); border-radius: 8px; color: var(--main-red);
-}
-
-.book-now-btn {
-    background: #25D366; color: white; border: none; padding: 15px;
-    width: 100%; border-radius: 10px; font-weight: bold; margin-bottom: 10px;
-}
-
-/* Floating Buttons */
+.menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: -30px; margin-bottom: 30px; }
+.menu-item { background: white; padding: 20px; border-radius: 15px; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.1); cursor: pointer; border-bottom: 4px solid var(--saffron); }
+.wisdom-card { background: white; padding: 20px; border-radius: 15px; border-left: 5px solid var(--gold); margin-bottom: 25px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+input, textarea { width: 100%; padding: 12px; margin-bottom: 10px; border-radius: 8px; border: 1px solid #ddd; box-sizing: border-box; }
+.overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 1000; display: none; justify-content: center; align-items: center; }
+.overlay-inner { background: white; padding: 25px; border-radius: 20px; max-width: 500px; width: 100%; max-height: 85vh; overflow-y: auto; position: relative; }
+.close-btn { position: absolute; top: 10px; right: 15px; font-size: 35px; border: none; background: none; cursor: pointer; }
+.pujan-menu { display: flex; flex-direction: column; gap: 10px; margin-top: 15px; }
+.pujan-card { background: #FFF8F0; padding: 15px; border-radius: 10px; border-left: 5px solid var(--saffron); font-weight: bold; cursor: pointer; text-align: left; }
+.book-now-btn { background: #25D366; color: white; border: none; padding: 15px; width: 100%; border-radius: 10px; font-weight: bold; cursor: pointer; }
+.back-link { border: 1px solid var(--main-red); color: var(--main-red); padding: 10px; border-radius: 5px; margin-top: 15px; font-weight: bold; cursor: pointer; width: 100%; background: none; }
 .float-box { position: fixed; bottom: 20px; right: 20px; display: flex; flex-direction: column; gap: 10px; }
-.btn-float { 
-    width: 55px; height: 55px; border-radius: 50%; 
-    display: flex; align-items: center; justify-content: center; 
-    color: white; font-size: 24px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); 
-}
-.wa { background: #25D366; }
-.call { background: var(--main-red); }
-
-footer { background: #1a1a1a; color: white; text-align: center; padding: 30px; margin-top: 40px; }
-.social-links a { color: white; font-size: 1.8rem; margin: 0 10px; }
-
-@media (max-width: 600px) {
-    .menu-grid { grid-template-columns: 1fr 1fr; }
-    header h1 { font-size: 1.8rem; }
-}
-.back-link {
-    background: none;
-    border: 1px solid var(--main-red);
-    color: var(--main-red);
-    padding: 10px;
-    border-radius: 5px;
-    margin-top: 15px;
-    font-weight: bold;
-    cursor: pointer;
-    width: 100%;
-}
-
-.back-link:hover {
-    background: var(--main-red);
-    color: white;
-}
+.btn-float { width: 55px; height: 55px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 24px; text-decoration: none; }
+.wa { background: #25D366; } .call { background: var(--main-red); }

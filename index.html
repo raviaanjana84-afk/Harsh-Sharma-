@@ -4,14 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>पंडित हर्ष शर्मा | उज्जैन आध्यात्मिक सेवाएँ</title>
+    
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#B22222">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Yantra+Manav:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#B22222">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
-    
 </head>
 <body>
 
@@ -24,18 +25,31 @@
 </header>
 
 <div class="container">
+    <div id="install-area" style="display:none; text-align:center; margin-top:10px; padding: 15px; background: white; border-radius: 15px; border-left: 5px solid #FFD700; margin-bottom: 20px;">
+        <h3 style="color: #B22222; margin-bottom: 5px;">📲 हमारा आधिकारिक ऐप</h3>
+        <button onclick="window.installApp()" class="book-now-btn" style="background:#25D366; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">✨ अभी इंस्टॉल करें (Install)</button>
+    </div>
+
     <div class="menu-grid">
-        <div class="menu-item" onclick="window.showSection('pujan')">
-            <i class="fas fa-om"></i><p>पूजन विभाग</p>
-        </div>
-        <div class="menu-item" onclick="window.showSection('hawan')">
-            <i class="fas fa-fire"></i><p>हवन विभाग</p>
-        </div>
-        <div class="menu-item" onclick="window.showSection('kundli')">
-            <i class="fas fa-scroll"></i><p>कुंडली विभाग</p>
-        </div>
-        <div class="menu-item" onclick="window.showSection('mantra')">
-            <i class="fas fa-hands-praying"></i><p>मंत्र विभाग</p>
+        <div class="menu-item" onclick="window.showSection('pujan')"><i class="fas fa-om"></i><p>पूजन विभाग</p></div>
+        <div class="menu-item" onclick="window.showSection('hawan')"><i class="fas fa-fire"></i><p>हवन विभाग</p></div>
+        <div class="menu-item" onclick="window.showSection('kundli')"><i class="fas fa-scroll"></i><p>कुंडली विभाग</p></div>
+        <div class="menu-item" onclick="window.showSection('mantra')"><i class="fas fa-hands-praying"></i><p>मंत्र विभाग</p></div>
+    </div>
+
+    <div class="wisdom-card" id="quiz-container">
+        <h3 style="text-align: center; color: #B22222;">🚩 आध्यात्मिक प्रश्नोत्तरी</h3>
+        <div id="quiz-content">
+            <p id="quiz-intro" style="text-align: center;">विषय चुनें और ज्ञान परखें!</p>
+            <div id="topic-selection" class="pujan-menu"></div>
+            <div id="question-area" style="display:none;">
+                <div id="quiz-header" style="display: flex; justify-content: space-between; margin-bottom: 10px; font-weight: bold; color: #FF8C00;">
+                    <span id="que-count"></span>
+                    <span id="score-count"></span>
+                </div>
+                <p id="question-text" style="font-size: 18px; font-weight: 600;"></p>
+                <div id="options-list" class="pujan-menu"></div>
+            </div>
         </div>
     </div>
 
@@ -43,23 +57,10 @@
         <h3>🙏 अपना अनुभव साझा करें</h3>
         <input type="text" id="userName" placeholder="आपका नाम">
         <textarea id="userReview" placeholder="अपना अनुभव लिखें..."></textarea>
-        <p style="font-size: 14px; margin-bottom: 5px; color: #666;">📸 फोटो (Optional):</p>
-        <input type="file" id="userPhoto" accept="image/*">
         <button id="submitBtn" onclick="window.saveReview()">✨ अनुभव साझा करें ✨</button>
     </div>
 
-    <div class="featured-video">
-        <h3>📺 विशेष दर्शन</h3>
-        <div class="video-container">
-            <iframe src="https://www.youtube.com/embed?listType=user_uploads&list=PanditHarshSharmaUjjain"></iframe>
-        </div>
-    </div>
-
-    <div class="reviews-section">
-        <h3>💬 भक्तों के अनुभव</h3>
-        <div id="reviewsList"></div>
-        <button id="viewMoreBtn" onclick="window.toggleReviews()" style="display:none; width:100%; padding:10px; background:none; border:1px solid #FF9933; color:#FF9933; border-radius:5px; font-weight:bold; margin-top:10px;">और भी देखें 👇</button>
-    </div>
+    <div id="reviewsList"></div>
 </div>
 
 <div id="overlay" class="overlay">
@@ -72,16 +73,9 @@
     <a href="tel:+918319714682" class="btn-float call"><i class="fas fa-phone"></i></a>
 </div>
 
-<footer>
-    <div class="social-links">
-        <a href="https://www.youtube.com/@PanditHarshSharmaUjjain" target="_blank"><i class="fab fa-youtube"></i></a>
-        <a href="https://www.instagram.com/harshu.0005" target="_blank"><i class="fab fa-instagram"></i></a>
-    </div>
-    <p>Designed with ❤️ by Ravi Anjana</p>
-</footer>
-
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 <script src="script.js"></script>
 </body>
 </html>
+

@@ -1,0 +1,15 @@
+{
+  "short_name": "पंडित हर्ष",
+  "name": "पंडित हर्ष शर्मा उज्जैन",
+  "icons": [
+    {
+      "src": "https://images.unsplash.com/photo-1544065603-997f742f36f6?w=192&h=192&fit=crop",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "index.html",
+  "background_color": "#B22222",
+  "theme_color": "#B22222",
+  "display": "standalone"
+}

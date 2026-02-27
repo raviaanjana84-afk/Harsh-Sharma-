@@ -34,22 +34,27 @@
         </div>
     </div>
 
-    <div class="wisdom-card" id="quiz-container">
-        <h3>🙏 आध्यात्मिक प्रश्नोत्तरी (Quiz)</h3>
-        <div id="quiz-content" style="text-align: center;">
-            <p>देखें आप अपनी सनातन संस्कृति को कितना जानते हैं!</p>
-            <button class="book-now-btn" style="background:#ff9933;" onclick="window.startQuiz()">🚩 क्विज़ शुरू करें</button>
-        </div>
-    </div>
-
     <div class="wisdom-card">
         <h3>🙏 अपना अनुभव साझा करें</h3>
         <input type="text" id="userName" placeholder="आपका नाम">
         <textarea id="userReview" placeholder="अपना अनुभव लिखें..."></textarea>
-        <button id="submitBtn" class="book-now-btn" onclick="window.saveReview()">✨ अनुभव साझा करें ✨</button>
+        <p style="font-size: 14px; margin-bottom: 5px; color: #666;">📸 फोटो (Optional):</p>
+        <input type="file" id="userPhoto" accept="image/*">
+        <button id="submitBtn" onclick="window.saveReview()">✨ अनुभव साझा करें ✨</button>
     </div>
 
-    <div id="reviewsList" class="reviews-section"></div>
+    <div class="featured-video">
+        <h3>📺 विशेष दर्शन</h3>
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed?listType=user_uploads&list=PanditHarshSharmaUjjain"></iframe>
+        </div>
+    </div>
+
+    <div class="reviews-section">
+        <h3>💬 भक्तों के अनुभव</h3>
+        <div id="reviewsList"></div>
+        <button id="viewMoreBtn" onclick="window.toggleReviews()" style="display:none; width:100%; padding:10px; background:none; border:1px solid #FF9933; color:#FF9933; border-radius:5px; font-weight:bold; margin-top:10px;">और भी देखें 👇</button>
+    </div>
 </div>
 
 <div id="overlay" class="overlay">
@@ -63,6 +68,10 @@
 </div>
 
 <footer>
+    <div class="social-links">
+        <a href="https://www.youtube.com/@PanditHarshSharmaUjjain" target="_blank"><i class="fab fa-youtube"></i></a>
+        <a href="https://www.instagram.com/harshu.0005" target="_blank"><i class="fab fa-instagram"></i></a>
+    </div>
     <p>Designed with ❤️ by Ravi Anjana</p>
 </footer>
 

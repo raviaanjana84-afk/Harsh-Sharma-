@@ -275,13 +275,18 @@ function toggleReviews() {
     document.getElementById('viewMoreBtn').style.display = "none";
 }
 
-// Start everything
-document.addEventListener('DOMContentLoaded', displayReviews);
-// Service Worker Registration
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('service-worker.js')
-      .then(reg => console.log('Service Worker Registered!'))
-      .catch(err => console.log('Service Worker Failed!', err));
-  });
-}
+self.addEventListener('install', (event) => {
+  event.waitUntil(
+    caches.open('v1').then((cache) => {
+      return cache.addAll(['./', './index.html', './style.css', './script.js']);
+    })
+  );
+});
+
+self.addEventListener('fetch', (event) => {
+  event.respondWith(
+    caches.match(event.request).then((response) => {
+      return response || fetch(event.request);
+    })
+  );
+});

@@ -1,18 +1,265 @@
-:root { --main-red: #B22222; --gold: #FFD700; --saffron: #FF8C00; --bg: #FFF8F0; }
-body { font-family: 'Poppins', sans-serif; background: var(--bg); margin: 0; color: #333; line-height: 1.6; }
-header { background: var(--main-red); padding: 40px 20px; text-align: center; color: white; border-bottom: 5px solid var(--gold); }
-.container { padding: 20px; max-width: 800px; margin: auto; }
-.menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: -30px; margin-bottom: 30px; }
-.menu-item { background: white; padding: 20px; border-radius: 15px; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.1); cursor: pointer; border-bottom: 4px solid var(--saffron); }
-.wisdom-card { background: white; padding: 20px; border-radius: 15px; border-left: 5px solid var(--gold); margin-bottom: 25px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
-input, textarea { width: 100%; padding: 12px; margin-bottom: 10px; border-radius: 8px; border: 1px solid #ddd; box-sizing: border-box; }
-.overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 1000; display: none; justify-content: center; align-items: center; }
-.overlay-inner { background: white; padding: 25px; border-radius: 20px; max-width: 500px; width: 100%; max-height: 85vh; overflow-y: auto; position: relative; }
-.close-btn { position: absolute; top: 10px; right: 15px; font-size: 35px; border: none; background: none; cursor: pointer; }
-.pujan-menu { display: flex; flex-direction: column; gap: 10px; margin-top: 15px; }
-.pujan-card { background: #FFF8F0; padding: 15px; border-radius: 10px; border-left: 5px solid var(--saffron); font-weight: bold; cursor: pointer; text-align: left; }
-.book-now-btn { background: #25D366; color: white; border: none; padding: 15px; width: 100%; border-radius: 10px; font-weight: bold; cursor: pointer; }
-.back-link { border: 1px solid var(--main-red); color: var(--main-red); padding: 10px; border-radius: 5px; margin-top: 15px; font-weight: bold; cursor: pointer; width: 100%; background: none; }
-.float-box { position: fixed; bottom: 20px; right: 20px; display: flex; flex-direction: column; gap: 10px; }
-.btn-float { width: 55px; height: 55px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 24px; text-decoration: none; }
-.wa { background: #25D366; } .call { background: var(--main-red); }
+/* --- 1. Global Variables & Base Styles --- */
+:root {
+    --main-red: #B22222;    /* गहरा लाल (धार्मिक रंग) */
+    --gold: #FFD700;        /* सुनहरा */
+    --saffron: #FF8C00;     /* केसरिया */
+    --bg: #FFF8F0;          /* क्रीम बैकग्राउंड */
+    --shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+* {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent; /* Mobile click effect remove */
+}
+
+body {
+    font-family: 'Poppins', 'Yantra Manav', sans-serif;
+    background-color: var(--bg);
+    margin: 0;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* --- 2. Header & Shlok Section --- */
+header {
+    background: var(--main-red);
+    color: white;
+    padding: 30px 20px;
+    text-align: center;
+    border-bottom: 5px solid var(--gold);
+    box-shadow: var(--shadow);
+}
+
+header h1 {
+    margin: 0;
+    font-size: 26px;
+    letter-spacing: 1px;
+}
+
+.shlok-header {
+    background: rgba(255, 255, 255, 0.1);
+    margin-top: 15px;
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px dashed var(--gold);
+}
+
+.shlok-header p {
+    margin: 0;
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--gold);
+    line-height: 1.4;
+}
+
+/* --- 3. Container & Layout --- */
+.container {
+    padding: 20px;
+    max-width: 600px;
+    margin: auto;
+    padding-bottom: 100px; /* Space for footer/float buttons */
+}
+
+.menu-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-top: -40px; /* Header के ऊपर चढ़ाने के लिए */
+}
+
+.menu-item {
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: var(--shadow);
+    cursor: pointer;
+    border-bottom: 4px solid var(--saffron);
+    transition: transform 0.2s;
+}
+
+.menu-item:active {
+    transform: scale(0.95);
+}
+
+.menu-item i {
+    font-size: 30px;
+    color: var(--main-red);
+    margin-bottom: 10px;
+}
+
+.menu-item p {
+    margin: 0;
+    font-weight: bold;
+}
+
+/* --- 4. Cards & Content --- */
+.wisdom-card {
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    margin-top: 20px;
+    box-shadow: var(--shadow);
+    border-left: 5px solid var(--main-red);
+}
+
+.wisdom-card h3 {
+    margin-top: 0;
+    color: var(--main-red);
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+}
+
+/* --- 5. Buttons --- */
+.book-now-btn {
+    background: var(--main-red);
+    color: white;
+    border: none;
+    padding: 15px;
+    width: 100%;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.mala-btn {
+    background: var(--main-red);
+    color: white;
+    border: 5px solid var(--gold);
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+    margin: 15px 0;
+}
+
+.mala-btn:active {
+    transform: scale(0.9);
+    background: var(--saffron);
+}
+
+/* --- 6. Overlay (Popups) --- */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.85);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+}
+
+.overlay-inner {
+    background: white;
+    width: 90%;
+    max-width: 450px;
+    max-height: 85vh;
+    border-radius: 20px;
+    padding: 25px;
+    position: relative;
+    overflow-y: auto;
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 35px;
+    color: #999;
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+.pujan-card {
+    background: #fdf2f2;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    border-left: 5px solid var(--saffron);
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.back-link {
+    background: #eee;
+    color: #333;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 15px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* --- 7. Floating Contacts --- */
+.float-box-contact {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    z-index: 1500;
+}
+
+.f-btn {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 25px;
+    text-decoration: none;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.wa-float { background: #25D366; }
+.call-float { background: var(--main-red); }
+
+/* --- 8. Footer & Social --- */
+.social-footer {
+    background: #333;
+    color: white;
+    text-align: center;
+    padding: 30px 20px;
+    margin-top: 50px;
+}
+
+.social-links {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    margin-top: 15px;
+}
+
+.social-links a {
+    color: white;
+    font-size: 28px;
+    transition: color 0.3s;
+}
+
+.social-links a:hover {
+    color: var(--gold);
+}
+
+/* --- 9. Inputs & Reviews --- */
+input, textarea {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-family: inherit;
+}

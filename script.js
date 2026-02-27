@@ -347,6 +347,51 @@ window.showKundliPrice = (id) => {
     `;
     document.getElementById('overlay-content').innerHTML = priceHTML;
 };
+
+
+// --- हिस्सा 6: लाइव रिव्यू सिस्टम ---
+
+// 1. रिव्यू को डेटाबेस में सेव करना
+window.saveReview = async () => {
+    const name = document.getElementById('userName').value;
+    const review = document.getElementById('userReview').value;
+    
+    if (name && review) {
+        try {
+            await db.collection("reviews").add({
+                name: name,
+                review: review,
+                time: firebase.firestore.FieldValue.serverTimestamp() // असली समय लेगा
+            });
+            alert("🙏 आपका अनुभव साझा करने के लिए धन्यवाद!");
+            document.getElementById('userName').value = "";
+            document.getElementById('userReview').value = "";
+        } catch (error) {
+            console.error("Error adding review: ", error);
+        }
+    } else {
+        alert("कृपया अपना नाम और अनुभव दोनों भरें।");
+    }
+};
+
+// 2. लाइव रिव्यू को स्क्रीन पर दिखाना (Live Listener)
+function displayLiveReviews() {
+    const list = document.getElementById('reviewsList');
+    
+    // यह कोड डेटाबेस पर नज़र रखेगा, जैसे ही नया रिव्यू आएगा, तुरंत दिखाएगा
+    db.collection("reviews").orderBy("time", "desc").onSnapshot((querySnapshot) => {
+        list.innerHTML = ""; // पुराना डेटा साफ़ करें
+        querySnapshot.forEach((doc) => {
+            const d = doc.data();
+            list.innerHTML += `
+                <div style="background: white; padding: 15px; border-radius: 10px; margin-bottom: 15px; border-left: 5px solid #B22222; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+                    <p style="margin: 0; font-size: 16px; font-weight: bold; color: #333;">${d.name}</p>
+                    <p style="margin: 5px 0 0 0; color: #555; font-style: italic;">"${d.review}"</p>
+                </div>
+            `;
+        });
+    });
+}
 // --- हिस्सा 5: एडवांस क्विज़ लॉजिक (150 रैंडम प्रश्न) ---
 
 // 1. 150 प्रश्नों का एरे (यहाँ मैंने आपकी लिस्ट को कोड में बदल दिया है)
@@ -515,58 +560,144 @@ function finalizeQuiz() {
             <button class="book-now-btn" onclick="window.startQuiz()">फिर से खेलें 🔄</button>
         </div>
     `;
-        }
-    window.startQuiz = () => {
-    const quizArea = document.getElementById('quiz-container');
-    quizArea.innerHTML = `
-        <p><b>प्रश्न: महाकाल मंदिर भारत के किस शहर में है?</b></p>
-        <button class="pujan-card" onclick="alert('✅ सही उत्तर! उज्जैन')">उज्जैन</button>
-        <button class="pujan-card" onclick="alert('❌ गलत उत्तर, फिर प्रयास करें।')">इंदौर</button>
-    `;
-};
-// --- हिस्सा 6: लाइव रिव्यू सिस्टम ---
+                                            }
+        
+// ... (पिछले कोड के आगे से)
+    { q: "श्री कृष्ण के प्रिय मित्र कौन थे?", options: ["भीम", "अर्जुन", "सुदामा", "नकुल"], a: 2 },
+    { q: "भगवद गीता का उपदेश किसे दिया गया?", options: ["भीम", "अर्जुन", "युधिष्ठिर", "दुर्योधन"], a: 1 },
+    { q: "श्री कृष्ण का शंख क्या कहलाता है?", options: ["देवदत्त", "पंचजन्य", "सुदर्शन", "कौमोदकी"], a: 1 },
+    { q: "श्री कृष्ण की पत्नी कौन थीं?", options: ["रुक्मिणी", "कुंती", "द्रौपदी", "सीता"], a: 0 }
+    // (आप अपनी 150 सवालों की लिस्ट यहाँ इसी फॉर्मेट में जोड़ सकते हैं)
+];
 
-// 1. रिव्यू को डेटाबेस में सेव करना
-window.saveReview = async () => {
-    const name = document.getElementById('userName').value;
-    const review = document.getElementById('userReview').value;
+let selectedQuizQuestions = [];
+let quizCurrentIndex = 0;
+let quizScore = 0;
+
+// क्विज़ शुरू करने का फंक्शन
+window.startQuiz = () => {
+    selectedQuizQuestions = [...krishnaQuizBank].sort(() => Math.random() - 0.5).slice(0, 10);
+    quizCurrentIndex = 0;
+    quizScore = 0;
+    renderQuizStep();
+};
+
+function renderQuizStep() {
+    const quizArea = document.getElementById('overlay-content');
+    const questionData = selectedQuizQuestions[quizCurrentIndex];
     
-    if (name && review) {
-        try {
-            await db.collection("reviews").add({
-                name: name,
-                review: review,
-                time: firebase.firestore.FieldValue.serverTimestamp() // असली समय लेगा
-            });
-            alert("🙏 आपका अनुभव साझा करने के लिए धन्यवाद!");
-            document.getElementById('userName').value = "";
-            document.getElementById('userReview').value = "";
-        } catch (error) {
-            console.error("Error adding review: ", error);
-        }
+    quizArea.innerHTML = `
+        <h2 style="color:#B22222; text-align:center;">🚩 कृष्ण क्विज़</h2>
+        <p style="font-size:14px; text-align:center;">सवाल ${quizCurrentIndex + 1} / 10 | स्कोर: ${quizScore}</p>
+        <p style="font-size:18px; font-weight:bold; margin:20px 0;">${questionData.q}</p>
+        <div class="pujan-menu">
+            ${questionData.options.map((opt, i) => `
+                <div class="pujan-card" style="background:white;" onclick="window.processQuizAnswer(${i})">
+                    ${String.fromCharCode(65 + i)}) ${opt}
+                </div>
+            `).join('')}
+        </div>
+    `;
+    document.getElementById('overlay').style.display = 'flex';
+}
+
+window.processQuizAnswer = (userIndex) => {
+    if (userIndex === selectedQuizQuestions[quizCurrentIndex].a) {
+        quizScore++;
+        alert("सही उत्तर! ✅");
     } else {
-        alert("कृपया अपना नाम और अनुभव दोनों भरें।");
+        alert("गलत उत्तर! ❌");
+    }
+    quizCurrentIndex++;
+    if (quizCurrentIndex < 10) {
+        renderQuizStep();
+    } else {
+        finalizeQuiz();
     }
 };
 
-// 2. लाइव रिव्यू को स्क्रीन पर दिखाना (Live Listener)
-function displayLiveReviews() {
-    const list = document.getElementById('reviewsList');
-    
-    // यह कोड डेटाबेस पर नज़र रखेगा, जैसे ही नया रिव्यू आएगा, तुरंत दिखाएगा
-    db.collection("reviews").orderBy("time", "desc").onSnapshot((querySnapshot) => {
-        list.innerHTML = ""; // पुराना डेटा साफ़ करें
-        querySnapshot.forEach((doc) => {
-            const d = doc.data();
-            list.innerHTML += `
-                <div style="background: white; padding: 15px; border-radius: 10px; margin-bottom: 15px; border-left: 5px solid #B22222; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
-                    <p style="margin: 0; font-size: 16px; font-weight: bold; color: #333;">${d.name}</p>
-                    <p style="margin: 5px 0 0 0; color: #555; font-style: italic;">"${d.review}"</p>
-                </div>
-            `;
-        });
+function finalizeQuiz() {
+    document.getElementById('overlay-content').innerHTML = `
+        <h2 style="color:#B22222; text-align:center;">क्विज़ संपन्न!</h2>
+        <div style="font-size:40px; text-align:center; margin:20px 0;">${quizScore} / 10</div>
+        <p style="text-align:center;">जय श्री कृष्ण! आपका ज्ञान सराहनीय है।</p>
+        <button class="book-now-btn" onclick="window.startQuiz()">फिर से खेलें 🔄</button>
+        <button class="back-link" style="width:100%;" onclick="window.hideSection()">बंद करें</button>
+    `;
+            }
+// --- हिस्सा 7: मंत्र विभाग (Nested Navigation) ---
+
+const mantraDatabase = {
+    'shiv': {
+        title: "शिव मंत्र",
+        items: [
+            { name: "महामृत्युंजय मंत्र", text: "ॐ त्र्यम्बकं यजामहे सुगन्धिं पुष्टिवर्धनम्। उर्वारुकमिव बन्धनान् मृत्योर्मुक्षीय मामृतात्॥", info: "मानसिक शक्ति और स्वास्थ्य के लिए।" },
+            { name: "पंचाक्षरी मंत्र", text: "ॐ नमः शिवाय ॥", info: "आत्म-शुद्धि और शांति के लिए।" }
+        ]
+    },
+    'devi': {
+        title: "देवी मंत्र",
+        items: [
+            { name: "लक्ष्मी मंत्र", text: "ॐ श्रीं महालक्ष्म्यै नमः ॥", info: "धन और समृद्धि के लिए।" }
+        ]
+    }
+    // (बाकी मंत्र भी इसी तरह जोड़ें...)
+};
+
+// Main showSection को अपडेट करें ताकि 'mantra' भी काम करे
+const finalShowSection = window.showSection;
+window.showSection = (key) => {
+    if (key === 'mantra') {
+        renderMantraMenu();
+    } else if (key === 'quiz') {
+        window.startQuiz();
+    } else {
+        finalShowSection(key);
+    }
+};
+
+function renderMantraMenu() {
+    let html = `<h2 style="color:#B22222; text-align:center;">🙏 मंत्र विभाग</h2><div class="pujan-menu">`;
+    Object.keys(mantraDatabase).forEach(key => {
+        html += `<div class="pujan-card" onclick="window.showMantraSub('${key}')">🕉️ ${mantraDatabase[key].title}</div>`;
     });
+    html += `</div><button class="book-now-btn" style="background:#666;" onclick="window.hideSection()">बंद करें</button>`;
+    document.getElementById('overlay-content').innerHTML = html;
+    document.getElementById('overlay').style.display = 'flex';
 }
+
+window.showMantraSub = (key) => {
+    const cat = mantraDatabase[key];
+    let html = `<h2 style="color:#B22222;">${cat.title}</h2><div class="pujan-menu">`;
+    cat.items.forEach((m, i) => {
+        html += `<div class="pujan-card" onclick="window.showMantraFinal('${key}', ${i})">🚩 ${m.name}</div>`;
+    });
+    html += `</div><button class="back-link" onclick="renderMantraMenu()">← वापस</button>`;
+    document.getElementById('overlay-content').innerHTML = html;
+};
+
+window.showMantraFinal = (key, index) => {
+    const m = mantraDatabase[key].items[index];
+    document.getElementById('overlay-content').innerHTML = `
+        <h2 style="color:#B22222;">${m.name}</h2>
+        <div style="background:#fff8f0; padding:20px; border-radius:15px; border-left:5px solid #FF8C00;">
+            <p style="font-size:20px; font-weight:bold; text-align:center;">${m.text}</p>
+            <p><b>लाभ:</b> ${m.info}</p>
+        </div>
+        <button class="back-link" style="width:100%;" onclick="window.showMantraSub('${key}')">← वापस लिस्ट में</button>
+    `;
+};
+
+// Overlay छुपाने का फंक्शन
+window.hideSection = () => {
+    document.getElementById('overlay').style.display = 'none';
+};
+
+// WhatsApp पर मैसेज भेजने का फंक्शन
+window.openWhatsApp = (msg) => {
+    const phone = "918698683996"; // आपका नंबर
+    window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`);
+};
 
 // पेज लोड होते ही रिव्यूज दिखाना शुरू करें
 document.addEventListener('DOMContentLoaded', displayLiveReviews);

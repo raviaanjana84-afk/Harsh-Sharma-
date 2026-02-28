@@ -3,93 +3,118 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>पंडित हर्ष शर्मा | उज्जैन</title>
-    <link rel="manifest" href="manifest.json">
+    <title>पंडित हर्ष शर्मा | उज्जैन - आध्यात्मिक सेवा</title>
+    
     <link rel="stylesheet" href="style.css">
-    <meta name="theme-color" content="#B22222">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Yantra+Manav:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#B22222">
 </head>
 <body>
 
-<header>
-    <h1>पंडित हर्ष शर्मा (उज्जैन)</h1>
-    <div class="shlok-header">
-        <p>ॐ धरणीगर्भसंभूतं विद्युत्कांतिसमप्रभम्।<br>कुमारं शक्तिहस्तं तं मंगलं प्रणमाम्यहम॥</p>
-    </div>
-</header>
+    <header>
+        <div class="header-top">
+            <span id="strike-display" title="आपकी डेली स्ट्राइक">🔥 0 दिन</span>
+            <h1>पंडित हर्ष शर्मा</h1>
+            <button id="install-area" style="display:none;" onclick="window.installApp()">Install App</button>
+        </div>
+        
+        <div class="shlok-header">
+            <p>ॐ धरणीगर्भसंभूतं विद्युत्कान्तिसमप्रभम्।<br>कुमारं शक्तिहस्तं तं मङ्गलं प्रणमाम्यहम्॥</p>
+        </div>
+    </header>
 
-<div class="container">
-    
-    <div id="install-area" style="display:none; text-align:center; margin-bottom: 20px;">
-        <button onclick="window.installApp()" class="book-now-btn" style="background:#25D366;">
-            📲 ऐप इंस्टॉल करें (Install App)
-        </button>
-    </div>
+    <div class="container">
+        <div class="menu-grid">
+            <div class="menu-item" onclick="window.showSection('pujan')">
+                <i class="fas fa-om"></i>
+                <p>पूजन विभाग</p>
+            </div>
+            <div class="menu-item" onclick="window.showSection('hawan')">
+                <i class="fas fa-fire"></i>
+                <p>हवन विभाग</p>
+            </div>
+            <div class="menu-item" onclick="window.showSection('kundli')">
+                <i class="fas fa-scroll"></i>
+                <p>कुंडली विभाग</p>
+            </div>
+            <div class="menu-item" onclick="window.showSection('mantra')">
+                <i class="fas fa-praying-hands"></i>
+                <p>मंत्र विभाग</p>
+            </div>
+            <div class="menu-item" onclick="window.showSection('bhandar')">
+                <i class="fas fa-shopping-bag"></i>
+                <p>भक्ति भंडार</p>
+            </div>
+            <div class="menu-item" onclick="window.showSection('bhakti-ai')">
+                <i class="fas fa-robot"></i>
+                <p>भक्ति AI</p>
+            </div>
+        </div>
 
-    <div class="menu-grid">
-        <div class="menu-item" onclick="window.showSection('pujan')"><i class="fas fa-om"></i><p>पूजन विभाग</p></div>
-        <div class="menu-item" onclick="window.showSection('hawan')"><i class="fas fa-fire"></i><p>हवन विभाग</p></div>
-        <div class="menu-item" onclick="window.showSection('kundli')"><i class="fas fa-scroll"></i><p>कुंडली विभाग</p></div>
-        <div class="menu-item" onclick="window.showSection('mantra')"><i class="fas fa-hands-praying"></i><p>मंत्र विभाग</p></div>
-    </div>
-
-    <div class="wisdom-card">
-        <h3 style="text-align:center; color:#B22222;">🚩 आध्यात्मिक क्विज़</h3>
-        <div id="quiz-container" style="text-align:center;">
+        <div class="wisdom-card">
+            <h3><i class="fas fa-flag"></i> आध्यात्मिक क्विज़</h3>
             <button class="book-now-btn" onclick="window.startQuiz()">क्विज़ शुरू करें</button>
         </div>
-    </div>
 
-    <div class="wisdom-card" style="text-align:center;">
-        <h3 style="color:#B22222;">📿 डिजिटल माला जाप</h3>
-        <div style="font-size: 50px; color:#B22222; font-weight:bold;" id="mala-count">0</div>
-        <button class="mala-btn" onclick="window.countMala()">जाप करें</button>
-        <p id="mala-target">लक्ष्य: 108</p>
-        <button onclick="window.resetMala()" style="background:none; border:none; color:gray; text-decoration:underline;">Reset</button>
-    </div>
+        <div class="wisdom-card" style="text-align: center;">
+            <h3><i class="fas fa-dharmachakra"></i> डिजिटल माला जाप</h3>
+            <div id="mala-count" style="font-size: 50px; font-weight: bold; color: #B22222;">0</div>
+            <button class="mala-btn" onclick="window.countMala()">जाप करें</button>
+            <p>लक्ष्य: 108 | आज की माला: <span id="total-mala">0</span></p>
+            <button class="back-link" onclick="window.showLeaderboard()">लीडरबोर्ड देखें 🏆</button>
+            <button class="back-link" style="color:red;" onclick="window.resetMala()">Reset</button>
+        </div>
 
-    <div class="wisdom-card">
-        <h3>🙏 अपना अनुभव साझा करें</h3>
-        <input type="text" id="userName" placeholder="आपका नाम">
-        <textarea id="userReview" placeholder="कैसा रहा आपका अनुभव?"></textarea>
-        <button class="book-now-btn" onclick="window.saveReview()">सबमिट करें</button>
-    </div>
-
-    <div class="wisdom-card">
-        <h3 style="color:#B22222; text-align:center;">💬 भक्तों के अनुभव (Live)</h3>
-        <hr style="border:0.5px solid #eee;">
-        <div id="reviewsList" style="max-height: 300px; overflow-y: auto; padding: 10px;">
-            <p style="text-align:center; color:gray;">रिव्यूज लोड हो रहे हैं...</p>
+        <div class="wisdom-card">
+            <h3><i class="fas fa-edit"></i> अपना अनुभव साझा करें</h3>
+            <input type="text" id="userName" placeholder="आपका नाम">
+            <textarea id="userReview" placeholder="कैसा रहा आपका अनुभव?"></textarea>
+            <button class="book-now-btn" onclick="window.saveReview()">सबमिट करें</button>
+            <hr>
+            <h4>भक्तों के अनुभव (Live)</h4>
+            <div id="reviewsList">रिव्यूज लोड हो रहे हैं...</div>
         </div>
     </div>
 
-</div>
-
-<div id="overlay" class="overlay">
-    <div class="overlay-inner">
-        <button class="close-btn" onclick="window.hideSection()">&times;</button>
-        <div id="overlay-content"></div>
+    <div class="float-box-contact">
+        <a href="tel:+918319714682" class="f-btn call-float"><i class="fas fa-phone"></i></a>
+        <a href="https://wa.me/918319714682" class="f-btn wa-float" target="_blank"><i class="fab fa-whatsapp"></i></a>
     </div>
-</div>
 
-<div class="float-box-contact">
-    <a href="https://wa.me/918319714682" class="f-btn wa-float"><i class="fab fa-whatsapp"></i></a>
-    <a href="tel:+918319714682" class="f-btn call-float"><i class="fas fa-phone"></i></a>
-</div>
-
-<footer class="social-footer">
-    <p>हमसे जुड़ें</p>
-    <div class="social-links">
-        <a href="#" target="_blank"><i class="fab fa-youtube"></i></a>
-        <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
-        <a href="#" target="_blank"><i class="fab fa-facebook"></i></a>
+    <div id="overlay" class="overlay">
+        <div class="overlay-inner">
+            <button class="close-btn" onclick="window.hideSection()">&times;</button>
+            <div id="overlay-content">
+                </div>
+        </div>
     </div>
-    <p style="font-size:12px; margin-top:15px;">© पंडित हर्ष शर्मा | उज्जैन</p>
-</footer>
 
-<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
-<script src="script.js"></script>
+    <footer class="social-footer">
+        <p>© पंडित हर्ष शर्मा | उज्जैन</p>
+        <div class="social-links">
+            <a href="#"><i class="fab fa-youtube"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-facebook"></i></a>
+        </div>
+    </footer>
+
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
+    <script src="config.js"></script>
+    <script src="pujan.js"></script>
+    <script src="hawan.js"></script>
+    <script src="kundli.js"></script>
+    <script src="mantra.js"></script>
+    <script src="bhandar.js"></script>
+    <script src="quiz.js"></script>
+    <script src="mala.js"></script>
+    <script src="reviews.js"></script>
+    <script src="bhakti-ai.js"></script>
+    <script src="main.js"></script>
 
 </body>
 </html>

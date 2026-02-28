@@ -132,3 +132,4 @@ window.onclick = function(event) {
     }
 };
 
+console.log("Pandit Ji App: Main.js is active!");
